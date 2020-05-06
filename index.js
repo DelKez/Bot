@@ -259,7 +259,7 @@ client.on('message', function (message) {                                       
         if (message.content === '!t') {
 
             message.channel.send("https://challonge.com/fr/u91chusc")
-            }
+            
         }    
     }
 })
