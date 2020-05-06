@@ -52,7 +52,7 @@ client.on('message', function (message) {                                       
         J = message.content.substr(5, 1);
         P = message.content.substr(7, 10);
 
-        if (J == " " || P == " ") {
+        if (J == " " || P == " " || J == 0 || P == 0) {
 
             message.reply("commande invalide !")
         }
@@ -92,7 +92,6 @@ client.on('message', function (message) {                                       
                 Pts[Pts.indexOf(ID)+2] = P;
                 Pts[Pts.indexOf(ID)+3] = J;
                 message.reply ("tu as parié " + P + " points sur le joueur " + J + " !")
-                message.channel.send ("Mise total sur le joueur : " + Joueur[Joueur.indexOf(J)+1])
                 B = B + P
             }
 
@@ -120,7 +119,7 @@ client.on('message', function (message) {                                       
 
             Joueur[Joueur.indexOf(J)+2] = 2 - (Joueur[Joueur.indexOf(J)+1] / B);
             Joueur[Joueur.indexOf(J)+2] = Joueur[Joueur.indexOf(J)+2].toFixed(2);
-            message.channel.send ("J" + J + " : " + Joueur[Joueur.indexOf(J)+2])
+            message.channel.send ("J" + J + " : " + Joueur[Joueur.indexOf(J)+2] + "Mise total sur le joueur :" + Joueur[Joueur.indexOf(J)+1])
         }   
     }
 })
@@ -135,11 +134,33 @@ client.on('message', function (message) {                                       
     }
 })
 
+client.on('message', function (message) {
+    if (message.content === '!rp') {
+
+        ID = message.member;
+
+        Pts[Pts.indexOf(ID)] = 300
+
+        message.reply("t'es points ont été réinitialisée à 300.")
+    }
+})
+
+client.on('message', function (message) {
+    if (message.content === '!help') {
+
+        message.channel.send("Listes des commandes :")
+        message.channel.send("S'inscrire aux paris : !ins")
+        message.channel.send("Parié : !bet (N°joueur) (Points)")
+        message.channel.send("Voire les côtes : !cotes")
+        message.channel.send("Voire ses points : !pts")
+        message.channel.send("Réinitialiser ses points : !rp")
+    }
+})
+
 client.on('message', function (message) {                                                     // Cmd Jesse
     ID = message.member;
 
     if (ID == 372062512558112780) {
-
         if (message.content.startsWith ("!j")) {
 
             J = message.content.substr(3, 10);
@@ -179,7 +200,7 @@ client.on('message', function (message) {                                       
 
                 Joueur[Joueur.indexOf(J)+2] = 2 - (Joueur[Joueur.indexOf(J)+1] / B);
                 Joueur[Joueur.indexOf(J)+2] = Joueur[Joueur.indexOf(J)+2].toFixed(2);
-                message.channel.send ("J" + J + " : " + Joueur[Joueur.indexOf(J)+2])
+                message.channel.send ("J" + J + " : " + Joueur[Joueur.indexOf(J)+2] + "Mise total sur le joueur :" + Joueur[Joueur.indexOf(J)+1])
             }    
         }
 
@@ -217,15 +238,27 @@ client.on('message', function (message) {                                       
             message.channel.send("Les paris sont désactivés !")
         }
 
+        if (message.content === '!ri') {
+
+            Pts = [];
+
+            message.channel.send("Les inscriptions ont été réinitialisées !")
+
+        }
+
+        if (message.content === '!hp') {
+
+            message.channel.send("Listes des commandes admin:")
+            message.channel.send("Enregistrer joueur : !j (Nb)")
+            message.channel.send("Stoper les paris : !sb")
+            message.channel.send("Faire gagner un joueur : !win (Nb)")
+            message.channel.send("Réinitialiser les inscriptions : !ri")
+            message.channel.send("Réinitialiser les points : !rpa")
+        }
+
         if (message.content === '!t') {
 
-            T = -1;
-            P = 4;
-
-            while (T++ != P) {
-
-                message.reply(T)
-                //message.reply(Pts[Pts.indexOf(T)+3])
+            message.channel.send("https://challonge.com/fr/u91chusc")
             }
         }    
     }
