@@ -150,7 +150,7 @@ client.on('message', function (message) {
 
         message.channel.send("Listes des commandes :")
         message.channel.send("S'inscrire aux paris : !ins")
-        message.channel.send("Parié : !bet (N°joueur) (Points)")
+        message.channel.send("Parier : !bet (N°joueur) (Points)")
         message.channel.send("Voire les côtes : !cotes")
         message.channel.send("Voire ses points : !pts")
         message.channel.send("Réinitialiser ses points : !rp")
@@ -220,27 +220,20 @@ client.on('message', function (message) {                                       
 
                     Pts[Pts.indexOf(W)-2] = Pts[Pts.indexOf(W)-2] + (Pts[Pts.indexOf(W)-1] * Joueur[Joueur.indexOf(J)+2]);
                     Pts[Pts.indexOf(W)-2] = Math.round(Pts[Pts.indexOf(W)-2]); 
-                
+
+                    Pts[Pts.indexOf(W)-1] = 0;
+                    Pts[Pts.indexOf(W)] = 0;
                 }
             } 
 
-            Joueur = [];
-
-            P = (Pts.length / 4)-1;
-            T = -1;
-
-            while (T++ < P) {
-
-                Pts[(T*4)+2] = 0;
-                Pts[(T*4)+3] = 0;
-            }
+            Joueur = [ ];
 
             message.channel.send("Les paris sont désactivés !")
         }
 
         if (message.content === '!ri') {
 
-            Pts = [];
+            Pts = [ ];
 
             message.channel.send("Les inscriptions ont été réinitialisées !")
 
@@ -253,13 +246,6 @@ client.on('message', function (message) {                                       
             message.channel.send("Stoper les paris : !sb")
             message.channel.send("Faire gagner un joueur : !win (Nb)")
             message.channel.send("Réinitialiser les inscriptions : !ri")
-            message.channel.send("Réinitialiser les points : !rpa")
-        }
-
-        if (message.content === '!t') {
-
-            message.channel.send("https://challonge.com/fr/u91chusc")
-            
         }    
     }
 })
