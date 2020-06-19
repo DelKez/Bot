@@ -1,190 +1,190 @@
 const Discord = require('discord.js'); 
 const client = new Discord.Client(); 
-
-var prefix = "*"; 
-
-var Inscription = [];
-var ID = [];
-
-var Pts = [];
-var P = 0;
-var B = 0;
-
-var J = 0;
-var Joueur = [];
-
-var C = 0;
-
-var W = 0;
-
-var T = 0;
-
-var M = 0;
-
-var D = false;
-
 client.login(process.env.TOKEN); 
 client.on("ready", () => { });
 
-client.on('message', function (message) {                                                     // INSCRIPTION
-    if (message.content === '!ins') {
+// TOUT
+var A = 0;
+var B = 0;
+var T = 0;
+var Image;
 
-        ID = message.member;
+// MODES
+var Mode; 
+var ModeList = ["paris","questionnaire","sondage"];
 
-        if (Inscription.indexOf(ID) != -1) {
+// MODE PARIS
+var ParisJoueur;
+var ParisPoints;
+var ParisPointsTotal;
+var ParisParieursList = [];
+var ParisJoueursList = [];
+var ParisDrapeau = false;
 
-            message.reply ("tu es déjà inscrit !")            
-        }
+// MODE QUESTIONNAIRE
+var QuestionnaireTemp;
+var QuestionnaireRéponse;
+var QuestionnaireQuestion = 1;
+var QuestionnaireQuestionsList = [];
+var QuestionnaireJoueursList = [];
+var QuestionnaireRéponsesList = [];
+var QuestionnaireDrapeau = true;
 
-        else {
+// MODE SONDAGE
+var SondageTemp;
+var SondageList;
 
-            Inscription = Inscription + [ID];
-            Pts.push(ID,300,0,0);                                                             // ID,Pts Banque, Pts misé ?, Joueur misé ?
+client.on('message', function (message) {  
+    
+    ID = message.member;
+
+    if (ID == 372062512558112780) {
+
+        if (message.content.startsWith("!mode")) {
+        
+            Mode = message.content.substr(6,100);
             
-            message.reply ("tu es inscrit aux paris ! Points de départ : 300 !")
-        }       
-    }
-})
+            if (ModeList.indexOf(Mode) != -1) {
 
-client.on('message', function (message) {                                                     // PARIS
-    if (message.content.startsWith("!bet ")) {
+                message.reply("Bien reçu, je passe en mode " + Mode + " !")
+            } 
+            
+            else {
 
-        J = message.content.substr(5, 1);
-        P = message.content.substr(7, 10);
-
-        if (J == " " || P == " " || J == 0 || P == 0) {
-
-            message.reply("commande invalide !")
+                message.reply("Désolé, ce mode n'est pas enregistré dans ma mémoire !")            
+            }
         }
 
-        else {
+        if (message.content === '!test') {
+            message.reply("Test !")
+            message.delete();
+        }
+    }
 
-            J = parseInt(J);
-            P = parseInt(P);
+    if (Mode == "paris") {
 
-            ID = message.member;
+        if (ID == 372062512558112780) {
 
-            if (D == false) {
+            if (message.content.startsWith ("!j")) {
 
-                message.reply('les paris sont déctivés !')
+                ParisJoueur = message.content.substr(3, 10);
+    
+                if (ParisJoueur == " ") {
+    
+                    message.reply("commande invalide !")
+                }
+    
+                else {
+    
+                    ParisJoueur = parseInt(ParisJoueur);
+                    ParisParieursTotal = 0;
+                    ParisJoueursList = [];
+                    T = 0;
+    
+                    while (T++ != ParisJoueur) {
+    
+                        ParisJoueursList.push(T,0,0)                                              // Num(0),MiseTotal(1),Cote(2)
+                    }
+
+                    T = 0;
+                    
+                    ParisDrapeau = true;
+                    message.channel.send(ParisJoueur + " Joueurs sont enregistré, les inscriptions sont désactivées et les paris s'activent !")  
+                }
+            }
+        }
+
+        if (message.content === '!ins') {
+
+            if (ParisDrapeau == true) {
+
+                message.channel.send("Les inscriptions ne sont pas activées !")
             }
 
-            else if (Pts[Pts.indexOf(ID)+2] != 0) {
+            else if (ParisParieursList.indexOf(ID) == -1) {
 
-                message.reply("tu as déjà parié !")
+                ParisParieursList.push(ID,300,0,0)                                                             // ID(0),Pts Banque (1),Joueur misé(2),Pts misé(3)     
+
+                message.reply ("tu es inscrit aux paris ! Points de départ : 300 !")            
+            }
+    
+            else {
+    
+                ParisParieursList[ParisParieursList.indexOf(ID)+1] = 300;
+                message.reply("t'es points ont été réinitialisée à 300.")      
+            }
+        }
+
+        if (message.content.startsWith("!bet ")) {
+
+            ParisJoueur = message.content.substr(5, 1);
+            ParisPoints = message.content.substr(7, 10);
+
+            ParisJoueur = parseInt(ParisJoueur);
+            ParisPoints = parseInt(ParisPoints);
+
+            if (ParisDrapeau == false) {
+
+                message.channel.send("Les paris ne sont pas activés !")
             }
 
-            else if (P > Pts[Pts.indexOf(ID)+1] && P != 0) {
+            else if (ParisJoueursList == []) {
 
-                P = Pts[Pts.indexOf(ID)+1];
-                message.reply ("tu n'as que " + P + "points ! Tu ne peux pas parier autant !")
+                message.channel.send("Les paris ne sont pas actifs !")
             }
 
-            else if (Pts[Pts.indexOf(ID)+1] == 0) {
-
-                message.reply("tu n'as plus de points !")
-            }
-
-            else if (Inscription.indexOf(ID) != -1 && Joueur.indexOf(J) != -1) {
-
-                Joueur[Joueur.indexOf(J)+1] = Joueur[Joueur.indexOf(J)+1] + P
-                Pts[Pts.indexOf(ID)+1] = Pts[Pts.indexOf(ID)+1] - P;
-                Pts[Pts.indexOf(ID)+2] = P;
-                Pts[Pts.indexOf(ID)+3] = J;
-                message.reply ("tu as parié " + P + " points sur le joueur " + J + " !")
-                B = B + P
-            }
-
-            else if (Inscription.indexOf(ID) == -1) {
+            else if (ParisParieursList.indexOf(ID) == -1) {
 
                 message.reply("tu n'es pas encore inscrit aux paris ! (!ins)")
             }
 
-            else {
+            else if (ParisJoueursList.indexOf(ParisJoueur) == -1) {
 
-                message.reply ("le joueur " + J + " n'existe pas !")
+                message.reply ("le joueur " + ParisJoueur + " n'existe pas !")
             }
-        }   
-    }
-})
 
-client.on('message', function (message) {                                                     // COTES
-    if (message.content === '!cotes') {
+            else if (ParisPoints > ParisParieursList[ParisParieursList.indexOf(ID)+1]) {
 
-        J = 0;
-        T = Joueur[Joueur.length - 3]
-        message.channel.send("Côtes des joueurs :")
+                message.reply ("tu n'as que " + ParisParieursList[ParisParieursList.indexOf(ID)+1] + " points, Tu ne peux pas parier autant !")
+            }
 
-        while (J++ != T) {
+            else if (ParisPoints < 10) {
 
-            Joueur[Joueur.indexOf(J)+2] = 2 - (Joueur[Joueur.indexOf(J)+1] / B);
-            Joueur[Joueur.indexOf(J)+2] = Joueur[Joueur.indexOf(J)+2].toFixed(2);
-            message.channel.send ("J" + J + " : " + Joueur[Joueur.indexOf(J)+2] + "Mise total sur le joueur :" + Joueur[Joueur.indexOf(J)+1])
-        }   
-    }
-})
+                message.reply ("les mises de moins de 10 points ne sont pas autorisées !")
+            }
 
-client.on('message', function (message) {                                                     // POINTS
-    if (message.content === '!pts') {
+            else if (ParisParieursList[ParisParieursList.indexOf(ID)+1] == 0) {
 
-        ID = message.member;
-        P = Pts[Pts.indexOf(ID)+1];
-
-        message.reply ("tu as " + P + " points.")
-    }
-})
-
-client.on('message', function (message) {
-    if (message.content === '!rp') {
-
-        ID = message.member;
-
-        Pts[Pts.indexOf(ID)] = 300
-
-        message.reply("t'es points ont été réinitialisée à 300.")
-    }
-})
-
-client.on('message', function (message) {
-    if (message.content === '!help') {
-
-        message.channel.send("Listes des commandes :")
-        message.channel.send("S'inscrire aux paris : !ins")
-        message.channel.send("Parier : !bet (N°joueur) (Points)")
-        message.channel.send("Voire les côtes : !cotes")
-        message.channel.send("Voire ses points : !pts")
-        message.channel.send("Réinitialiser ses points : !rp")
-    }
-})
-
-client.on('message', function (message) {                                                     // Cmd Jesse
-    ID = message.member;
-
-    if (ID == 372062512558112780) {
-        if (message.content.startsWith ("!j")) {
-
-            J = message.content.substr(3, 10);
-
-            if (J == " ") {
-
-                message.reply("commande invalide !")
+                message.reply("tu n'as plus de points !")
             }
 
             else {
 
-                J = parseInt(J);
-                T = 0;
-
-                while (T++ != J) {
-
-                    Joueur.push(T,0,0)                                              // Num  0, Mise  +1, Cote  +2
-                }
-
-                message.channel.send(J + " Joueur sont enregistré !")
-                message.channel.send("Les paris sont activé !")
+                ParisParieursList[ParisParieursList.indexOf(ID)+2] = ParisJoueur;
+                ParisParieursList[ParisParieursList.indexOf(ID)+3] = ParisPoints;
+                ParisParieursList[ParisParieursList.indexOf(ID)+1] = ParisParieursList[ParisParieursList.indexOf(ID)+1] - ParisPoints;
+                ParisJoueursList[ParisJoueursList.indexOf(ParisJoueur)+1] = ParisJoueursList[ParisJoueursList.indexOf(ParisJoueur)+1] + ParisPoints;
+                ParisPointsTotal = ParisPointsTotal + ParisPoints;
+                message.reply ("tu as parié " + ParisPoints + " points sur le joueur " + ParisJoueur + " !")
             }
+        } 
 
-            D = true;
+        if (message.content === '!pts') {
+    
+            message.reply ("tu as " + ParisParieursList[ParisParieursList.indexOf(ID)+1] + " points.")
+        }
+
+        if (message.content === '!cote') {
+
+            message.channel.send("Côtes des joueurs :")
+            T = 0;
+
+            while (T++ < ParisJoueursList[ParisJoueursList.length - 3]) {
+
+                ParisJoueursList[ParisJoueursList.indexOf(T)+2] = 2 - (ParisJoueursList[ParisJoueursList.indexOf(T)+1] / ParisPointsTotal);
+                ParisJoueursList[ParisJoueursList.indexOf(T)+2] = ParisJoueursList[ParisJoueursList.indexOf(T)+2].toFixed(2);
+                message.channel.send ("J" + T + " : " + ParisJoueursList[ParisJoueursList.indexOf(T)+2] + " Mise total sur le joueur : " + ParisJoueursList[ParisJoueursList.indexOf(T)+1])
+            }
         }
 
         if (message.content === '!sb') {
@@ -193,61 +193,131 @@ client.on('message', function (message) {                                       
             D = false
 
             message.channel.send("Côtes des joueurs :")
-            J = 0;
-            T = Joueur[Joueur.length - 3]
+            T = 0;
 
-            while (J++ != T) {
+            while (T++ <= ParisJoueursList.length / 3) {
 
-                Joueur[Joueur.indexOf(J)+2] = 2 - (Joueur[Joueur.indexOf(J)+1] / B);
-                Joueur[Joueur.indexOf(J)+2] = Joueur[Joueur.indexOf(J)+2].toFixed(2);
-                message.channel.send ("J" + J + " : " + Joueur[Joueur.indexOf(J)+2] + "Mise total sur le joueur :" + Joueur[Joueur.indexOf(J)+1])
+                ParisJoueursList[ParisJoueursList.indexOf(T)+2] = 2 - (ParisJoueursList[ParisJoueursList.indexOf(T)+1] / ParisPointsTotal);
+                ParisJoueursList[ParisJoueursList.indexOf(T)+2] = ParisJoueursList[ParisJoueursList.indexOf(T)+2].toFixed(2);
+                message.channel.send ("J" + T + " : " + ParisJoueursList[ParisJoueursList.indexOf(T)+2] + " Mise total sur le joueur : " + ParisJoueursList[ParisJoueursList.indexOf(T)+1])
             }    
         }
+    }
 
-        if (message.content.startsWith ('!win ')) {
+    if (Mode == "questionnaire") {
 
-            J = message.content.substr(5,10);
-            J = parseInt(J);
+        if (ID == 372062512558112780) {
 
-            message.channel.send("Le joueur " + J + " a gagné !")
+            if (message.content === '!créateur') {
 
-            P = Pts.length -1;
-            W = 0;
+                message.channel.send("@everyone, l'heure est venu de rendre fier notre Créateur ! (!ins pour s'inscrire)")
 
-            while (W++ != P) {
+                QuestionnaireQuestionsList = ["Si vous deviez décrire votre créateur en cinq adjectifs, lesquels choisirez-vous ?",
+                "Quelle est le principale défaut du Créateur ?",
+                "Selon vous, qu'est-ce que le créateur pense de vous ?",
+                ""];
 
-                if (W == J) {
+                QuestionnaireDrapeau = false;
+            }
 
-                    Pts[Pts.indexOf(W)-2] = Pts[Pts.indexOf(W)-2] + (Pts[Pts.indexOf(W)-1] * Joueur[Joueur.indexOf(J)+2]);
-                    Pts[Pts.indexOf(W)-2] = Math.round(Pts[Pts.indexOf(W)-2]); 
+            if (message.content === '!start') {
 
-                    Pts[Pts.indexOf(W)-1] = 0;
-                    Pts[Pts.indexOf(W)] = 0;
+                message.channel.send("C'est parti !")
+                QuestionnaireDrapeau = false;
+
+                while (QuestionnaireQuestion != QuestionnaireQuestionsList.length) {
+
+                    message.channel.send("Question "+QuestionnaireQuestion+" :")
+                    message.channel.send(QuestionnaireQuestionsList[QuestionnaireQuestion - 1])
+                    QuestionnaireQuestion++;
                 }
+
+                QuestionnaireQuestion = 1;
             } 
+            
+            if (message.content === '!stop') {
 
-            Joueur = [ ];
+                message.channel.send("C'est fini !")
 
-            message.channel.send("Les paris sont désactivés !")
+                while (QuestionnaireQuestion != QuestionnaireQuestionsList.length) {
+
+                    message.channel.send("Question "+QuestionnaireQuestion+" :")
+                    message.channel.send(QuestionnaireQuestionsList[QuestionnaireQuestion - 1])
+                    QuestionnaireQuestion++;
+                }
+            }
         }
 
-        if (message.content === '!ri') {
+        if (message.content === '!ins') {
 
-            Pts = [ ];
+            if (QuestionnaireDrapeau == true) {
 
-            message.channel.send("Les inscriptions ont été réinitialisées !")
+                message.channel.send("Les inscriptions ne sont pas activées !")
+            }
 
+            else if (QuestionnaireJoueursList.indexOf(ID) == -1) {
+
+                QuestionnaireJoueursList.push(ID,0)                                                                                       // ID(0),J(1)  
+                QuestionnaireRéponsesList.push("","","","","","","","","","")                                                             // ID(0),Rep(1-10)  
+
+                message.reply ("tu es inscrit aux Questionnaire, bonne chance !")            
+            }
+
+            message.delete();
         }
 
-        if (message.content === '!hp') {
+        if (message.content.startsWith("!q ")) {
 
-            message.channel.send("Listes des commandes admin:")
-            message.channel.send("Enregistrer joueur : !j (Nb)")
-            message.channel.send("Stoper les paris : !sb")
-            message.channel.send("Faire gagner un joueur : !win (Nb)")
-            message.channel.send("Réinitialiser les inscriptions : !ri")
-        }    
+            ID = message.member;
+
+            QuestionnaireTemp = message.content.substr(3, 1);
+            QuestionnaireTemp = parseInt(QuestionnaireTemp) + 1;
+
+            QuestionnaireRéponse = message.content.substr(5,1000);
+
+            QuestionnaireRéponsesList[QuestionnaireRéponsesList.indexOf(QuestionnaireTemp)] = QuestionnaireRéponse;
+        }
+    }
+
+    if (Mode == "sondage") {
+
+        if (message.content.startsWith("!start ")) {
+
+            message.delete();
+
+            SondageList = message.content.substr(7, 999);
+            SondageList = SondageList.split(' ');
+
+            message.channel.send("Liste de départ :")
+
+            SondageTemp = 0;
+
+            while (SondageTemp < SondageList.length) {
+
+                message.channel.send(SondageList[SondageTemp])
+                SondageTemp++;
+            }
+        }
+
+        if (message.content.startsWith("!vs ")) {
+
+            SondageList = message.content.substr(4, 999);
+            SondageList = SondageList.split(' ');
+
+            message.delete();
+
+            SondageTemp = 0;
+
+            while (SondageTemp < SondageList.length) {
+
+                message.channel.send(SondageList[SondageTemp]+" :vs: "+SondageList[SondageTemp + 1])
+                message.channel.send(SondageList[SondageTemp]+" :one:")
+                message.channel.send(SondageList[SondageTemp + 1]+" :two:").then(sentEmbed => {
+                    sentEmbed.react("1️⃣")
+                    sentEmbed.react("2️⃣")
+                })
+                SondageTemp = SondageTemp + 2;
+            }
+        }
     }
 })
-
-//HEROKU MDP : 4884J$
