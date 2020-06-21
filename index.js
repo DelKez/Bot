@@ -4,14 +4,16 @@ client.login(process.env.TOKEN);
 client.on("ready", () => { });
 
 // TOUT
+var ID;
+var OP = [372062512558113,419925262881260];
 var A = 0;
 var B = 0;
 var T = 0;
 var Image;
 
 // MODES
-var Mode; 
-var ModeList = ["paris","questionnaire","sondage"];
+var Mode = "robot"; 
+var ModeList = ["robot","paris","questionnaire","sondage"];
 
 // MODE PARIS
 var ParisJoueur;
@@ -32,38 +34,92 @@ var QuestionnaireDrapeau = true;
 
 // MODE SONDAGE
 var SondageTemp;
+var SondageTemp2;
+var SondageTour;
+var SondageTourNum;
 var SondageList;
 
 client.on('message', function (message) {  
     
     ID = message.member;
 
-    if (ID == 372062512558112780) {
+    if (message.content.startsWith("!id")) {
 
-        if (message.content.startsWith("!mode")) {
+        message.author.send("ID : " + Math.round(ID / 1000));
+    }
+
+    if (OP.indexOf(Math.round(ID / 1000)) != -1) {
+
+        if (message.content.startsWith("!mode ")) {
         
             Mode = message.content.substr(6,100);
+
+            message.delete();
             
             if (ModeList.indexOf(Mode) != -1) {
 
-                message.reply("Bien reçu, je passe en mode " + Mode + " !")
+                message.reply("bien reçu, je passe en mode " + Mode + " !")
             } 
             
             else {
 
-                message.reply("Désolé, ce mode n'est pas enregistré dans ma mémoire !")            
+                message.reply("désolé, ce mode n'est pas enregistré dans ma mémoire !")            
             }
         }
 
-        if (message.content === '!test') {
-            message.reply("Test !")
+        if (message.content === '!mode?') {
+
+            message.reply("je suis en mode " + Mode               + "\n"
+            + "Sinon voici la liste des modes dont je dispose :"  + "\n"
+            + ModeList)  
+
             message.delete();
+        }
+
+        if (message.content === '!op') {
+
+            message.author.send("Listes des OP : " + OP) 
+            message.delete();
+        }
+
+        if (message.content.startsWith("!op ")) {
+        
+            ID = message.content.substr(4,100);
+            OP.push(ID);
+            message.author.send("Listes des OP : " + OP)
+            message.delete();
+        }
+
+        if (message.content === '!test') {
+
+            message.reply({files: ["./Robot.png"]})
+            client.user.setAvatar("./Robot.png")
+            message.delete();
+        }
+    }
+
+    if (Mode == "robot") {
+
+        if (message.content === '!help') {
+
+            message.reply("Vraiement ? Il faut que je rappelle les commandes ? Tu fais que d'oublier... Hein quoi ?" + "\n" + "\n"
+            
+            + "Liste des commandes du mode robot :"                                                                  + "\n" + "\n"
+            
+            + "!mode Sélectionne le mode de ton choix parmis tous ceux là :"                                         + "\n"
+            + ModeList                                                                                               + "\n" + "\n"
+
+            + "!mode? Te rappelle le mode qu'on m'a donné."                                                          + "\n" + "\n"
+
+            + "Voilà voilà, et n'oublie plus ces commandes !"
+
+            )
         }
     }
 
     if (Mode == "paris") {
 
-        if (ID == 372062512558112780) {
+        if (OP.indexOf(Math.round(ID / 1000)) != -1) {
 
             if (message.content.startsWith ("!j")) {
 
@@ -206,7 +262,7 @@ client.on('message', function (message) {
 
     if (Mode == "questionnaire") {
 
-        if (ID == 372062512558112780) {
+        if (OP.indexOf(Math.round(ID / 1000)) != -1) {
 
             if (message.content === '!créateur') {
 
@@ -281,43 +337,232 @@ client.on('message', function (message) {
 
     if (Mode == "sondage") {
 
-        if (message.content.startsWith("!start ")) {
+        if (OP.indexOf(Math.round(ID / 1000)) != -1) {
 
-            message.delete();
+            if (message.content === '!help') {
 
-            SondageList = message.content.substr(7, 999);
-            SondageList = SondageList.split(' ');
+                message.reply("bah alors, on a des troues de mémoire ?"                + "\n" + "\n"
 
-            message.channel.send("Liste de départ :")
+                + "Liste des commandes du mode sondage :"                              + "\n" + "\n"
+                
+                + "!liste Affiche la liste de départ."                                 + "\n"
+                + "Ex : !liste Cornflex, Chocapic, Miel Pops, Trésor"                  + "\n" + "\n"
 
-            SondageTemp = 0;
+                + "!tirage xx Affiche le tirage d'un tour xx."                         + "\n"
+                + "Le nombre xx peut prendre ces valeurs : 16, 08, 04 et 02."          + "\n"
+                + "16 = 1/16ème de finale, de même, 08 = 1/8ème de final ect..."       + "\n"
+                + "Ex : !tirage 08 Cornflex, Chocapic, Miel Pops, Trésor"              + "\n" + "\n"
 
-            while (SondageTemp < SondageList.length) {
+                + "!vs xx Lance un ou plusieurs duels selon le nombre xx."             + "\n"
+                + "Le nombre xx peut prendre ces valeurs : 16, 08, 04, 02, 01 et 00."  + "\n"
+                + "16 = 1/16ème de finale, de même, 08 = 1/8ème de final ect..."       + "\n"
+                + "P'tite précision : 01 = Petite finale et 00 = Finale."              + "\n"
+                + "Ex : !vs 02 Cornflex, Chocapic, Miel Pops, Trésor"                  + "\n" + "\n"
 
-                message.channel.send(SondageList[SondageTemp])
-                SondageTemp++;
+                + "!pro xx yy Lance la prolongation d'un duel du tour xx et de N° yy." + "\n"
+                + "Le nombre xx peut prendre ces valeurs : 16, 08, 04, 02, 01 et 00."  + "\n"
+                + "16 = 1/16ème de finale, de même, 08 = 1/8ème de final ect..."       + "\n"
+                + "P'tite précision : 01 = Petite finale et 00 = Finale."              + "\n"
+                + "Le nombre yy peut prendre ces valeurs : 16, 15, 14, ..., 02 et 01." + "\n"
+                + "14 = Duel N°14, de même, 04 = Duel N°4 ect..."                      + "\n"
+                + "Ex : !pro 04 02 Cornflex, Chocapic"                                 + "\n" + "\n"
+                
+                + "!fin Affiche le podium du tournoi."                                 + "\n"
+                + "Ex : !fin Cornflex, Chocapic, Miel Pops"                            + "\n"
+                + "Evidemment, dans l'exemple, Cornflex est N°1 et Miel Pops N°3"      + "\n" + "\n"
+
+                + "Et en p'tit rappelle, les virgules dans les commandes sont importante !"
+                )
             }
-        }
 
-        if (message.content.startsWith("!vs ")) {
+            if (message.content.startsWith("!liste ")) {
 
-            SondageList = message.content.substr(4, 999);
-            SondageList = SondageList.split(' ');
+                SondageList = message.content.substr(7, 999);
+                SondageList = SondageList.split(', ');
 
-            message.delete();
+                message.delete();
 
-            SondageTemp = 0;
+                message.channel.send("Liste de départ :")
 
-            while (SondageTemp < SondageList.length) {
+                SondageTemp = 0;
 
-                message.channel.send(SondageList[SondageTemp]+" :vs: "+SondageList[SondageTemp + 1])
-                message.channel.send(SondageList[SondageTemp]+" :one:")
-                message.channel.send(SondageList[SondageTemp + 1]+" :two:").then(sentEmbed => {
+                while (SondageTemp < SondageList.length) {
+
+                    message.channel.send(SondageList[SondageTemp])
+                    SondageTemp++;
+                }
+            }
+
+            if (message.content.startsWith("!tirage ")) {
+
+                SondageTour = message.content.substr(8, 2);
+                SondageList = message.content.substr(11, 999);
+                SondageList = SondageList.split(', ');
+
+                message.delete();
+
+                if (SondageTour == "16") {
+                    SondageTour = "Voici le tirage des seizièmes de finale :";
+                }
+                if (SondageTour == "08") {
+                    SondageTour = "Voici le tirage des huitièmes de finale :";
+                }
+                if (SondageTour == "04") {
+                    SondageTour = "Voici le tirage des quarts de finale :";
+                }
+                if (SondageTour == "02") {
+                    SondageTour = "Voici le tirage des demi-finales :";
+                }
+
+                message.channel.send(SondageTour)
+
+                SondageTemp = 0;
+
+                while (SondageTemp < SondageList.length) {
+
+                    message.channel.send(SondageList[SondageTemp] + " :vs: " + SondageList[SondageTemp + 1])
+                    SondageTemp = SondageTemp + 2;
+                }
+            }
+
+            if (message.content.startsWith("!vs ")) {
+
+                SondageTour = message.content.substr(4, 2);
+                SondageList = message.content.substr(7, 999);
+                SondageList = SondageList.split(', ');
+
+                SondageTourNum = 1;
+                SondageTemp2 = " :"
+
+                if (SondageTour == "16") {
+                    SondageTour = "@everyone 1/16ème de finale N°";
+                }
+                if (SondageTour == "08") {
+                    SondageTour = "@everyone 1/8ème de finale N°";
+                }
+                if (SondageTour == "04") {
+                    SondageTour = "@everyone Quart de finale N°";
+                }
+                if (SondageTour == "02") {
+                    SondageTour = "@everyone Demi-finale N°";
+                }
+                if (SondageTour == "01") {
+                    SondageTour = "@everyone Petite finale (3ème place) :";
+                    SondageTourNum = "";
+                    SondageTemp2 = "";
+                }
+                if (SondageTour == "00") {
+                    SondageTour = "@everyone FINALE :";
+                    SondageTourNum = "";
+                    SondageTemp2 = "";
+                }
+
+                message.delete();
+
+                SondageTemp = 0;
+                
+                while (SondageTemp < SondageList.length) {
+  
+                    message.channel.send(SondageTour + SondageTourNum + SondageTemp2     + " \n"
+                    + SondageList[SondageTemp] + " :vs: " + SondageList[SondageTemp + 1] + " \n"
+                    + SondageList[SondageTemp] + " :one:"                                + " \n"
+                    + SondageList[SondageTemp + 1] + " :two:").then(sentEmbed => {
+                        sentEmbed.react("1️⃣")
+                        sentEmbed.react("2️⃣")
+                    })
+                    
+                    SondageTemp = SondageTemp + 2;
+                    SondageTourNum++;
+                }
+            }
+
+            if (message.content.startsWith("!pro ")) {
+
+                SondageTour = message.content.substr(5, 2);
+                SondageTourNum = message.content.substr(8, 2);
+                SondageList = message.content.substr(11, 999);
+                SondageList = SondageList.split(', ');
+
+                if (SondageTourNum == "09") {
+                    SondageTourNum = "9";
+                }
+                if (SondageTourNum == "08") {
+                    SondageTourNum = "8";
+                }
+                if (SondageTourNum == "07") {
+                    SondageTourNum = "7";
+                }
+                if (SondageTourNum == "06") {
+                    SondageTourNum = "6";
+                }
+                if (SondageTourNum == "05") {
+                    SondageTourNum = "5";
+                }
+                if (SondageTourNum == "04") {
+                    SondageTourNum = "4";
+                }
+                if (SondageTourNum == "03") {
+                    SondageTourNum = "3";
+                }
+                if (SondageTourNum == "02") {
+                    SondageTourNum = "2";
+                }
+                if (SondageTourNum == "01") {
+                    SondageTourNum = "1";
+                }
+
+                if (SondageTour == "16") {
+                    SondageTour = "@everyone 1/16ème de finale N°";
+                }
+                if (SondageTour == "08") {
+                    SondageTour = "@everyone 1/8ème de finale N°";
+                }
+                if (SondageTour == "04") {
+                    SondageTour = "@everyone Quart de finale N°";
+                }
+                if (SondageTour == "02") {
+                    SondageTour = "@everyone Demi-finale N°";
+                }
+                if (SondageTour == "01") {
+                    SondageTour = "@everyone Petite finale (3ème place)";
+                    SondageTourNum = "";
+                }
+                if (SondageTour == "00") {
+                    SondageTour = "@everyone FINALE";
+                    SondageTourNum = "";
+                }
+
+                message.delete();
+                
+                message.channel.send(SondageTour + SondageTourNum + " (prolongation) :"              + " \n"
+                + SondageList[0] + " :vs: " + SondageList[1]                                         + " \n"
+                + SondageList[0] + " :one:"                                                          + " \n"
+                + SondageList[1] + " :two:").then(sentEmbed => {
                     sentEmbed.react("1️⃣")
                     sentEmbed.react("2️⃣")
                 })
+                    
                 SondageTemp = SondageTemp + 2;
+                SondageTourNum++;
+                
+            }
+
+            if (message.content.startsWith("!fin ")) {
+
+                SondageList = message.content.substr(5, 999);
+                SondageList = SondageList.split(', ');
+
+                message.delete();
+
+                message.channel.send("@everyone C’est donc une victoire de " + SondageList[0] + " ! :first_place:" + "\n"
+                + "Voici donc le podium de ce tournoi :"                                                           + "\n"
+                + ":three::third_place: " + SondageList[2]                                                         + "\n"
+                + ":two::second_place: "  + SondageList[1]                                                         + "\n"
+                + ":one::first_place: "   + SondageList[0]
+                )
+
             }
         }
     }
 })
+//HEROKU MDP : 4884J$
