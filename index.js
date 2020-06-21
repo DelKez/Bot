@@ -5,7 +5,7 @@ client.on("ready", () => { });
 
 // TOUT
 var ID;
-var OP = [372062512558113,419925262881260];
+var OP = [372062512558113,419925262881260,457240529176887];
 var A = 0;
 var B = 0;
 var T = 0;
@@ -102,7 +102,7 @@ client.on('message', function (message) {
 
         if (message.content === '!help') {
 
-            message.reply("Vraiement ? Il faut que je rappelle les commandes ? Tu fais que d'oublier... Hein quoi ?" + "\n" + "\n"
+            message.reply("Vraiment ? Il faut que je rappelle les commandes ? Tu fais que d'oublier... Hein quoi ?" + "\n" + "\n"
             
             + "Liste des commandes du mode robot :"                                                                  + "\n" + "\n"
             
