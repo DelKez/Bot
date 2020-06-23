@@ -9,7 +9,6 @@ var OP = [372062512558113,419925262881260,457240529176887];
 var A = 0;
 var B = 0;
 var T = 0;
-var Image;
 
 // MODES
 var Mode = "robot"; 
@@ -35,9 +34,16 @@ var QuestionnaireDrapeau = true;
 // MODE SONDAGE
 var SondageTemp;
 var SondageTemp2;
+var SondageRand;
+var SondageRandList = [];
 var SondageTour;
 var SondageTourNum;
 var SondageList;
+
+function getRandomInt(max) {
+
+    return Math.floor(Math.random() * Math.floor(max));
+}
 
 client.on('message', function (message) {  
     
@@ -92,8 +98,7 @@ client.on('message', function (message) {
 
         if (message.content === '!test') {
 
-            message.reply({files: ["./Robot.png"]})
-            client.user.setAvatar("./Robot.png")
+            message.reply(getRandomInt(3))
             message.delete();
         }
     }
@@ -391,6 +396,20 @@ client.on('message', function (message) {
                     message.channel.send(SondageList[SondageTemp])
                     SondageTemp++;
                 }
+
+                SondageTemp = 0;
+
+                while (SondageTemp < SondageList.length) {
+
+                    SondageList[SondageTemp] = (" " + SondageList[SondageTemp])
+                    SondageTemp++;
+                }
+
+                message.author.send("Commande pour lancer le premier tirage :")
+                message.author.send("!tirage " + (SondageList.length / 2) + SondageList)
+
+                message.channel.send(":loudspeaker:  BONNE CHANCE !")
+
             }
 
             if (message.content.startsWith("!tirage ")) {
@@ -400,6 +419,23 @@ client.on('message', function (message) {
                 SondageList = SondageList.split(', ');
 
                 message.delete();
+
+                SondageTemp = 0;
+                SondageTemp2 = 0;
+                SondageRandList = [];
+
+                while (SondageTemp < SondageList.length) {
+
+                    SondageRand = getRandomInt(SondageList.length);
+
+                    SondageTemp2 = SondageList[SondageRand];
+                    SondageList.splice(SondageRand, 1);
+                    SondageList.push(SondageTemp2);
+
+                    SondageTemp++;         
+                }
+
+                SondageTemp2 = SondageTour;
 
                 if (SondageTour == "16") {
                     SondageTour = "Voici le tirage des seizièmes de finale :";
@@ -423,6 +459,19 @@ client.on('message', function (message) {
                     message.channel.send(SondageList[SondageTemp] + " :vs: " + SondageList[SondageTemp + 1])
                     SondageTemp = SondageTemp + 2;
                 }
+
+                SondageTemp = 0;
+
+                while (SondageTemp < SondageList.length) {
+
+                    SondageList[SondageTemp] = (" " + SondageList[SondageTemp])
+                    SondageTemp++;
+                }
+
+                message.author.send("Commande pour lancer les votes :")
+                message.author.send("!vs " + SondageTemp2 + SondageList)
+
+                message.channel.send(":loudspeaker:  FIN DU TIRAGE !")
             }
 
             if (message.content.startsWith("!vs ")) {
