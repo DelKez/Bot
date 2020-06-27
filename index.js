@@ -1,6 +1,7 @@
-const Discord = require('discord.js'); 
-const client = new Discord.Client(); 
-client.login(process.env.TOKEN); 
+const Discord = require('discord.js');
+const client = new Discord.Client();
+var prefix = "*";
+client.login("NzA4OTgyNzEwNjY3ODM3NTUx.Xrfd8A.LovMSjaYP61xROI14Kgzha7N0z4");
 client.on("ready", () => { });
 
 // TOUT
@@ -35,10 +36,13 @@ var QuestionnaireDrapeau = true;
 var SondageTemp;
 var SondageTemp2;
 var SondageRand;
-var SondageRandList = [];
 var SondageTour;
 var SondageTourNum;
 var SondageList;
+
+// MODE JEUX
+var JeuxMode;
+var JeuxModeList = [];
 
 function getRandomInt(max) {
 
@@ -376,6 +380,9 @@ client.on('message', function (message) {
                 + "Ex : !fin Cornflex, Chocapic, Miel Pops"                            + "\n"
                 + "Evidemment, dans l'exemple, Cornflex est N°1 et Miel Pops N°3"      + "\n" + "\n"
 
+                + "!archive Affiche le podium, le nom et la date d'un tournoi passé."  + "\n"
+                + "Ex : !archive Céréales, 01/15/2020, Cornflex, Chocapic, Miel Pops"  + "\n" + "\n"
+
                 + "Et en p'tit rappelle, les virgules dans les commandes sont importante !"
                 )
             }
@@ -611,6 +618,50 @@ client.on('message', function (message) {
                 )
 
             }
+
+            if (message.content.startsWith("!archive ")) {
+
+                SondageList = message.content.substr(9, 999);
+                SondageList = SondageList.split(', ');
+
+                message.delete();
+
+                message.channel.send("Le tournoi des " + SondageList[0] + " s'est terminé le " + SondageList[1]    + "\n"
+                + "Voici le podium de ce tournoi :"                                                                + "\n"
+                + ":three::third_place: " + SondageList[4]                                                         + "\n"
+                + ":two::second_place: "  + SondageList[3]                                                         + "\n"
+                + ":one::first_place: "   + SondageList[2]
+                )
+
+            }
+        }
+    }
+
+    if (Mode == "jeux") {
+
+        if (OP.indexOf(Math.round(ID / 1000)) != -1) {
+
+            if (message.content === '!help') {
+
+                message.reply("Vraiment ? Il faut que je rappelle les commandes ? Tu fais que d'oublier... Hein quoi ?" + "\n" + "\n"
+            
+                + "Liste des commandes du mode robot :"                                                                  + "\n" + "\n"
+            
+                + "!mode Sélectionne le mode de ton choix parmis tous ceux là :"                                         + "\n"
+                + ModeList                                                                                               + "\n" + "\n"
+
+                + "!mode? Te rappelle le mode qu'on m'a donné."                                                          + "\n" + "\n"
+
+                + "Voilà voilà, et n'oublie plus ces commandes !"
+
+                )
+            }
+        }
+
+        if (message.content === '!liste') {
+            message.reply("Voici la liste des jeux disponible :" +"\n"
+            + JeuxModeList
+            )
         }
     }
 })
