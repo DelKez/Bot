@@ -1,7 +1,6 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-var prefix = "*";
-client.login("NzA4OTgyNzEwNjY3ODM3NTUx.Xrfd8A.LovMSjaYP61xROI14Kgzha7N0z4");
+const Discord = require('discord.js'); 
+const client = new Discord.Client(); 
+client.login(process.env.TOKEN); 
 client.on("ready", () => { });
 
 // TOUT
@@ -36,13 +35,10 @@ var QuestionnaireDrapeau = true;
 var SondageTemp;
 var SondageTemp2;
 var SondageRand;
+var SondageRandList = [];
 var SondageTour;
 var SondageTourNum;
 var SondageList;
-
-// MODE JEUX
-var JeuxMode;
-var JeuxModeList = [];
 
 function getRandomInt(max) {
 
@@ -597,10 +593,9 @@ client.on('message', function (message) {
                     sentEmbed.react("1️⃣")
                     sentEmbed.react("2️⃣")
                 })
-                    
+                
                 SondageTemp = SondageTemp + 2;
                 SondageTourNum++;
-                
             }
 
             if (message.content.startsWith("!fin ")) {
@@ -616,7 +611,6 @@ client.on('message', function (message) {
                 + ":two::second_place: "  + SondageList[1]                                                         + "\n"
                 + ":one::first_place: "   + SondageList[0]
                 )
-
             }
 
             if (message.content.startsWith("!archive ")) {
@@ -634,34 +628,6 @@ client.on('message', function (message) {
                 )
 
             }
-        }
-    }
-
-    if (Mode == "jeux") {
-
-        if (OP.indexOf(Math.round(ID / 1000)) != -1) {
-
-            if (message.content === '!help') {
-
-                message.reply("Vraiment ? Il faut que je rappelle les commandes ? Tu fais que d'oublier... Hein quoi ?" + "\n" + "\n"
-            
-                + "Liste des commandes du mode robot :"                                                                  + "\n" + "\n"
-            
-                + "!mode Sélectionne le mode de ton choix parmis tous ceux là :"                                         + "\n"
-                + ModeList                                                                                               + "\n" + "\n"
-
-                + "!mode? Te rappelle le mode qu'on m'a donné."                                                          + "\n" + "\n"
-
-                + "Voilà voilà, et n'oublie plus ces commandes !"
-
-                )
-            }
-        }
-
-        if (message.content === '!liste') {
-            message.reply("Voici la liste des jeux disponible :" +"\n"
-            + JeuxModeList
-            )
         }
     }
 })
