@@ -666,7 +666,8 @@ client.on('message', function (message) {
 
                 else {
 
-                    message.channel.send(SondageTour + " :")
+                    message.channel.send("**_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _**"  + "\n"
+                    + SondageTour + " :")
                     
                     while (SondageTemp < SondageList.length) {
                         
