@@ -671,7 +671,8 @@ client.on('message', function (message) {
                     
                     while (SondageTemp < SondageList.length) {
                         
-                        message.channel.send("**" + SondageList[SondageTemp] + "**" + " :vs: " + SondageList[SondageTemp + 1] )
+                        message.channel.send("**_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _**"  + "\n"
+                        + "**" + SondageList[SondageTemp] + "**" + " :vs: " + SondageList[SondageTemp + 1] )
         
                         SondageTemp = SondageTemp + 2;
                         SondageTourNum++;
