@@ -35,10 +35,13 @@ var QuestionnaireDrapeau = true;
 var SondageTemp;
 var SondageTemp2;
 var SondageRand;
-var SondageRandList = [];
 var SondageTour;
 var SondageTourNum;
 var SondageList;
+
+// MODE JEUX
+var JeuxMode;
+var JeuxModeList = [];
 
 function getRandomInt(max) {
 
@@ -593,9 +596,10 @@ client.on('message', function (message) {
                     sentEmbed.react("1️⃣")
                     sentEmbed.react("2️⃣")
                 })
-                
+                    
                 SondageTemp = SondageTemp + 2;
                 SondageTourNum++;
+                
             }
 
             if (message.content.startsWith("!fin ")) {
@@ -611,23 +615,95 @@ client.on('message', function (message) {
                 + ":two::second_place: "  + SondageList[1]                                                         + "\n"
                 + ":one::first_place: "   + SondageList[0]
                 )
+
             }
 
             if (message.content.startsWith("!archive ")) {
 
-                SondageList = message.content.substr(9, 999);
-                SondageList = SondageList.split(', ');
+                SondageTour = message.content.substr(9, 2);
+                SondageList = message.content.substr(12, 999);
+                SondageList = SondageList.split(', ')
 
                 message.delete();
 
-                message.channel.send("Le tournoi des " + SondageList[0] + " s'est terminé le " + SondageList[1]    + "\n"
-                + "Voici le podium de ce tournoi :"                                                                + "\n"
-                + ":three::third_place: " + SondageList[4]                                                         + "\n"
-                + ":two::second_place: "  + SondageList[3]                                                         + "\n"
-                + ":one::first_place: "   + SondageList[2]
-                )
+                SondageTourNum = 1;
+                SondageTemp2 = " :"
 
+                if (SondageTour == "16") {
+                    SondageTour = "1/16ème de finale N°";
+                }
+                if (SondageTour == "08") {
+                    SondageTour = "1/8ème de finale N°";
+                }
+                if (SondageTour == "04") {
+                    SondageTour = "Quart de finale N°";
+                }
+                if (SondageTour == "02") {
+                    SondageTour = "Demi-finale N°";
+                }
+                if (SondageTour == "01") {
+                    SondageTour = "Petite finale (3ème place) :";
+                    SondageTourNum = "";
+                    SondageTemp2 = "";
+                }
+                if (SondageTour == "00") {
+                    SondageTour = "FINALE :";
+                    SondageTourNum = "";
+                    SondageTemp2 = "";
+                }
+
+                SondageTemp = 0;
+
+                if (SondageTour != "10") {
+
+                    while (SondageTemp < SondageList.length) {
+  
+                        message.channel.send(SondageTour + SondageTourNum + SondageTemp2     + " \n"
+                        + "**" + SondageList[SondageTemp] + "**" + " :vs: " + SondageList[SondageTemp + 1] )
+        
+                        SondageTemp = SondageTemp + 2;
+                        SondageTourNum++;
+                    }
+                }
+
+                else {
+                    
+                    message.channel.send("Le tournoi des " + SondageList[0] + " s'est terminé le " + SondageList[1]    + "\n"
+                    + "Voici le podium de ce tournoi :"                                                                + "\n"
+                    + ":three::third_place: " + SondageList[4]                                                         + "\n"
+                    + ":two::second_place: "  + SondageList[3]                                                         + "\n"
+                    + ":one::first_place: "   + SondageList[2]
+                    )
+                }
             }
+        }
+    }
+
+    if (Mode == "jeux") {
+
+        if (OP.indexOf(Math.round(ID / 1000)) != -1) {
+
+            if (message.content === '!help') {
+
+                message.reply("Vraiment ? Il faut que je rappelle les commandes ? Tu fais que d'oublier... Hein quoi ?" + "\n" + "\n"
+            
+                + "Liste des commandes du mode robot :"                                                                  + "\n" + "\n"
+            
+                + "!mode Sélectionne le mode de ton choix parmis tous ceux là :"                                         + "\n"
+                + ModeList                                                                                               + "\n" + "\n"
+
+                + "!mode? Te rappelle le mode qu'on m'a donné."                                                          + "\n" + "\n"
+
+                + "Voilà voilà, et n'oublie plus ces commandes !"
+
+                )
+            }
+        }
+
+        if (message.content === '!liste') {
+            message.reply("Voici la liste des jeux disponible :" +"\n"
+            + JeuxModeList
+            )
         }
     }
 })
