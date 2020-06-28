@@ -635,16 +635,16 @@ client.on('message', function (message) {
                 SondageTemp2 = " :"
 
                 if (SondageTour == "16") {
-                    SondageTour = "1/16ème de finale N°";
+                    SondageTour = "1/16ème de finale";
                 }
                 if (SondageTour == "08") {
-                    SondageTour = "1/8ème de finale N°";
+                    SondageTour = "1/8ème de finale";
                 }
                 if (SondageTour == "04") {
-                    SondageTour = "Quart de finale N°";
+                    SondageTour = "Quart de finale";
                 }
                 if (SondageTour == "02") {
-                    SondageTour = "Demi-finale N°";
+                    SondageTour = "Demi-finale";
                 }
 
                 SondageTemp = 0;
@@ -665,11 +665,12 @@ client.on('message', function (message) {
                 }
 
                 else {
+
+                    message.channel.send(SondageTour + " :")
                     
                     while (SondageTemp < SondageList.length) {
                         
-                        message.channel.send(SondageTour + SondageTourNum + SondageTemp2     + " \n"
-                        + "**" + SondageList[SondageTemp] + "**" + " :vs: " + SondageList[SondageTemp + 1] )
+                        message.channel.send("**" + SondageList[SondageTemp] + "**" + " :vs: " + SondageList[SondageTemp + 1] )
         
                         SondageTemp = SondageTemp + 2;
                         SondageTourNum++;
