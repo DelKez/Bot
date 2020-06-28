@@ -651,7 +651,8 @@ client.on('message', function (message) {
 
                 if (SondageTour == "00") {
                     
-                    message.channel.send("Voici le podium de ce tournoi :"                                             + "\n"
+                    message.channel.send("**_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _**"                                         + "\n"
+                    + "Voici le podium de ce tournoi :"                                                                + "\n"
                     + ":three::third_place: " + SondageList[2]                                                         + "\n"
                     + ":two::second_place: "  + SondageList[1]                                                         + "\n"
                     + ":one::first_place: "   + SondageList[0]
@@ -671,8 +672,7 @@ client.on('message', function (message) {
                     
                     while (SondageTemp < SondageList.length) {
                         
-                        message.channel.send("**_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _**"  + "\n"
-                        + "**" + SondageList[SondageTemp] + "**" + " :vs: " + SondageList[SondageTemp + 1] )
+                        message.channel.send("**" + SondageList[SondageTemp] + "**" + " :vs: " + SondageList[SondageTemp + 1] )
         
                         SondageTemp = SondageTemp + 2;
                         SondageTourNum++;
