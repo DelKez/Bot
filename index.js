@@ -379,8 +379,13 @@ client.on('message', function (message) {
                 + "Ex : !fin Cornflex, Chocapic, Miel Pops"                            + "\n"
                 + "Evidemment, dans l'exemple, Cornflex est N°1 et Miel Pops N°3"      + "\n" + "\n"
 
-                + "!archive Affiche le podium, le nom et la date d'un tournoi passé."  + "\n"
-                + "Ex : !archive Céréales, 01/15/2020, Cornflex, Chocapic, Miel Pops"  + "\n" + "\n"
+                + "!archive xx Affiche des archives selon xx."                         + "\n"
+                + "Le nombre xx peut prendre ces valeurs : 16, 08, 04, 02, 01 et 00."  + "\n"
+                + "16 = 1/16ème de finale, de même, 08 = 1/8ème de final ect..."       + "\n"
+                + "P'tite précision : 01 = Annonce et 00 = Podium."                    + "\n"
+                + "Ex : !archive 01, céréales, 07/05/2020, 14/05/2020"                 + "\n" 
+                + "Ex : !archive 16, Cornflex, Chocapic"                               + "\n"
+                + "Ex : !archive 00, Cornflex, Chocapic, Miel Pops"                    + "\n" + "\n"
 
                 + "Et en p'tit rappelle, les virgules dans les commandes sont importante !"
                 )
@@ -641,39 +646,34 @@ client.on('message', function (message) {
                 if (SondageTour == "02") {
                     SondageTour = "Demi-finale N°";
                 }
-                if (SondageTour == "01") {
-                    SondageTour = "Petite finale (3ème place) :";
-                    SondageTourNum = "";
-                    SondageTemp2 = "";
-                }
-                if (SondageTour == "00") {
-                    SondageTour = "FINALE :";
-                    SondageTourNum = "";
-                    SondageTemp2 = "";
-                }
 
                 SondageTemp = 0;
 
-                if (SondageTour != "10") {
+                if (SondageTour == "00") {
+                    
+                    message.channel.send("Voici le podium de ce tournoi :"                                             + "\n"
+                    + ":three::third_place: " + SondageList[2]                                                         + "\n"
+                    + ":two::second_place: "  + SondageList[1]                                                         + "\n"
+                    + ":one::first_place: "   + SondageList[0]
+                    )
+                }
 
+                else if (SondageTour == "01") {
+                    
+                    message.channel.send("**_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _**"  + "\n"
+                    + "Le tournoi des **" + SondageList[0] + "** à débuté le **" + SondageList[1] + "** et s'est terminé le **" + SondageList[2] + "**")
+                }
+
+                else {
+                    
                     while (SondageTemp < SondageList.length) {
-  
+                        
                         message.channel.send(SondageTour + SondageTourNum + SondageTemp2     + " \n"
                         + "**" + SondageList[SondageTemp] + "**" + " :vs: " + SondageList[SondageTemp + 1] )
         
                         SondageTemp = SondageTemp + 2;
                         SondageTourNum++;
                     }
-                }
-
-                else {
-                    
-                    message.channel.send("Le tournoi des " + SondageList[0] + " s'est terminé le " + SondageList[1]    + "\n"
-                    + "Voici le podium de ce tournoi :"                                                                + "\n"
-                    + ":three::third_place: " + SondageList[4]                                                         + "\n"
-                    + ":two::second_place: "  + SondageList[3]                                                         + "\n"
-                    + ":one::first_place: "   + SondageList[2]
-                    )
                 }
             }
         }
