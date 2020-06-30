@@ -1,6 +1,7 @@
-const Discord = require('discord.js'); 
-const client = new Discord.Client(); 
-client.login(process.env.TOKEN); 
+const Discord = require('discord.js');
+const client = new Discord.Client();
+var prefix = "*";
+client.login("NzA4OTgyNzEwNjY3ODM3NTUx.XvaO1A.ArGam8nTe1TtYOd8_nVCQsrnCTE");
 client.on("ready", () => { });
 
 // TOUT
@@ -110,7 +111,7 @@ client.on('message', function (message) {
 
         if (message.content === '!help') {
 
-            message.reply("Vraiment ? Il faut que je rappelle les commandes ? Tu fais que d'oublier... Hein quoi ?" + "\n" + "\n"
+            message.reply("Vraiment ? Il faut que je rappelle les commandes ? Tu fais que d'oublier... Hein quoi ?"  + "\n" + "\n"
             
             + "Liste des commandes du mode robot :"                                                                  + "\n" + "\n"
             
@@ -393,12 +394,29 @@ client.on('message', function (message) {
 
             if (message.content.startsWith("!liste ")) {
 
-                SondageList = message.content.substr(7, 999);
+                SondageTour = message.content.substr(7, 2)
+                SondageList = message.content.substr(10, 999);
                 SondageList = SondageList.split(', ');
 
                 message.delete();
 
-                message.channel.send("Liste de départ :")
+                SondageTemp2 = SondageTour;
+
+                if (SondageTour == "00") {
+                    SondageTour = "Voici les sélectionnés :";
+                    SondageTour = "16";
+                }
+                if (SondageTour == "08") {
+                    SondageTour = "Voici les qualifiés des huitièmes de finale :";
+                }
+                if (SondageTour == "04") {
+                    SondageTour = "Voici les qualifiés des quarts de finale :";
+                }
+                if (SondageTour == "02") {
+                    SondageTour = "Voici les qualifiés des demi-finales :";
+                }
+
+                message.channel.send(SondageTour)
 
                 SondageTemp = 0;
 
@@ -417,9 +435,9 @@ client.on('message', function (message) {
                 }
 
                 message.author.send("Commande pour lancer le premier tirage :")
-                message.author.send("!tirage " + (SondageList.length / 2) + SondageList)
+                message.author.send("!tirage " + SondageTemp2 + SondageList)
 
-                message.channel.send(":loudspeaker:  BONNE CHANCE !")
+                message.channel.send(":loudspeaker:  Le tirage va être effectué dans quelques instant !")
 
             }
 
@@ -651,8 +669,7 @@ client.on('message', function (message) {
 
                 if (SondageTour == "00") {
                     
-                    message.channel.send("**_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _**"                                         + "\n"
-                    + "Voici le podium de ce tournoi :"                                                                + "\n"
+                    message.channel.send("Voici le podium de ce tournoi :"                                             + "\n"
                     + ":three::third_place: " + SondageList[2]                                                         + "\n"
                     + ":two::second_place: "  + SondageList[1]                                                         + "\n"
                     + ":one::first_place: "   + SondageList[0]
@@ -667,8 +684,7 @@ client.on('message', function (message) {
 
                 else {
 
-                    message.channel.send("**_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _**"  + "\n"
-                    + SondageTour + " :")
+                    message.channel.send(SondageTour + " :")
                     
                     while (SondageTemp < SondageList.length) {
                         
