@@ -1,6 +1,7 @@
 const Discord = require('discord.js'); 
 const client = new Discord.Client(); 
-client.login(process.env.TOKEN); 
+//client.login(process.env.TOKEN); 
+client.login("NzA2ODMxNDg1MjczMTEyNjM3.Xvtvxg.-ueJjtHYXIlvgue2nWMKKudqcF8")
 client.on("ready", () => { });
 
 // TOUT
@@ -353,8 +354,10 @@ client.on('message', function (message) {
 
                 + "Liste des commandes du mode sondage :"                              + "\n" + "\n"
                 
-                + "!liste Affiche la liste de départ."                                 + "\n"
-                + "Ex : !liste Cornflex, Chocapic, Miel Pops, Trésor"                  + "\n" + "\n"
+                + "!liste xx Affiche une liste."                                       + "\n"
+                + "Le nombre xx peut prendre ces valeurs : 16, 08, 04, 02 et 00."      + "\n"
+                + "P'tite précision : 00 = 1er liste."                                 + "\n"
+                + "Ex : !liste 16 Cornflex, Chocapic, Miel Pops, Trésor"               + "\n" + "\n"
 
                 + "!tirage xx Affiche le tirage d'un tour xx."                         + "\n"
                 + "Le nombre xx peut prendre ces valeurs : 16, 08, 04 et 02."          + "\n"
@@ -403,7 +406,9 @@ client.on('message', function (message) {
 
                 if (SondageTour == "00") {
                     SondageTour = "Voici les sélectionnés :";
-                    SondageTour = "16";
+                }
+                if (SondageTour == "16") {
+                    SondageTour = "Voici les qualifiés des seizièmes de finale :";
                 }
                 if (SondageTour == "08") {
                     SondageTour = "Voici les qualifiés des huitièmes de finale :";
@@ -436,7 +441,7 @@ client.on('message', function (message) {
                 message.author.send("Commande pour lancer le premier tirage :")
                 message.author.send("!tirage " + SondageTemp2 + SondageList)
 
-                message.channel.send(":loudspeaker:  Le tirage va être effectué dans quelques instant !")
+                message.channel.send(":loudspeaker:  Le tirage va être effectué dans quelques instants !")
 
             }
 
