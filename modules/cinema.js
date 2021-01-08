@@ -16,6 +16,6 @@ function help(cmd){
 }
 
 function start(cmd){
-    mot = "**SÉANCE :** " + "**" + cmd[1] + "** - SAISON " + cmd[2] + " ÉPISODE " + cmd[3] + " À " + cmd[4] + " PROGRAMMER AU " + cmd[5] + " - " + cmd[6] + " — HÔTE : " + cmd[7]
+    mot = "||@everyone|| **SÉANCE :** " + "**" + cmd[1] + "** - SAISON " + cmd[2] + " ÉPISODE " + cmd[3] + " À " + cmd[4] + " PROGRAMMER AU " + cmd[5] + " - " + cmd[6] + " — HÔTE : " + cmd[7]
     return mot
 }
