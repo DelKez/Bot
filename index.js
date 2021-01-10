@@ -10,7 +10,6 @@ const Date = require("./tool/date")
 const Numero = require("./tool/numero")
 const Cmd = require("./tool/cmd")
 
-
 // TOUT
 var ID;
 var OP = [372062512558113,419925262881260,457240529176887];
@@ -20,12 +19,12 @@ client.on('message', function (message) {
 
     ID = message.member;
     cmd = message.content;
+    message.delete();
 
     if (cmd[0] == "!") {
 
         cmd = Cmd.cmd(cmd)
         
-
         if (OP.indexOf(Math.round(ID / 1000)) >= 0) {
 
             if (cmd[0] == "!mode") {
