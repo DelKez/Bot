@@ -1,11 +1,15 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-client.login(process.env.TOKEN);
+client.login("NzA4OTgyNzEwNjY3ODM3NTUx.XvtoQw.L117z6ywle2c44hv7NruzvP-dKQ");
 client.on("ready", () => { });
 
 // APPEL FICHIERS
 const Mode = require("./modules/mode")
 const Cinema = require("./modules/cinema")
+const Date = require("./tool/date")
+const Numero = require("./tool/numero")
+const Cmd = require("./tool/cmd")
+
 
 // TOUT
 var ID;
@@ -19,21 +23,24 @@ client.on('message', function (message) {
 
     if (cmd[0] == "!") {
 
-        cmd = message.content.substr(1,100);
-        cmd = cmd.split(" ");
+        cmd = Cmd.cmd(cmd)
+        
 
         if (OP.indexOf(Math.round(ID / 1000)) >= 0) {
 
-            if (cmd[0] == "mode") {
-                mot = Mode.cmd(cmd)
+            if (cmd[0] == "!mode") {
+                mot = Mode.cmd(cmd);
             }
     
-            if (Mode.getMode() == "cinéma") {
+            else if (Mode.getMode() == "cinéma") {
                 mot = Cinema.cmd(cmd);
+            }
+            
+            else {
+                mot = "...";
             }
             message.channel.send(mot)
         }
     }
 })
-
-//HEROKU MDP : 4884J$
+//HEROKU MDP : 46----64Jj
