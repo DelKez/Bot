@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-client.login("NzA4OTgyNzEwNjY3ODM3NTUx.XrfRmg.1TJtFU40TP5TEHzLYoRKhh7AxPc");
+client.login(process.env.TOKEN);
 client.on("ready", () => { });
 
 // APPEL FICHIERS
