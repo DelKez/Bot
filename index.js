@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-client.login(process.env.TOKEN);
+client.login("NzA4OTgyNzEwNjY3ODM3NTUx.XrfRmg.1TJtFU40TP5TEHzLYoRKhh7AxPc");
 client.on("ready", () => { });
 
 // APPEL FICHIERS
@@ -19,8 +19,7 @@ client.on('message', function (message) {
 
     ID = message.member;
     cmd = message.content;
-    message.delete();
-
+    
     if (cmd[0] == "!") {
 
         cmd = Cmd.cmd(cmd)
@@ -38,6 +37,7 @@ client.on('message', function (message) {
             else {
                 mot = "...";
             }
+            message.delete();
             message.channel.send(mot)
         }
     }
