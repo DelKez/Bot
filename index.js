@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-client.login("NzA4OTgyNzEwNjY3ODM3NTUx.XvtoQw.L117z6ywle2c44hv7NruzvP-dKQ");
+client.login(process.env.TOKEN);
 client.on("ready", () => { });
 
 // APPEL FICHIERS
@@ -35,7 +35,7 @@ client.on('message', function (message) {
             else if (Mode.getMode() == "cinéma") {
                 mot = Cinema.cmd(cmd);
             }
-            
+
             else {
                 mot = "...";
             }
