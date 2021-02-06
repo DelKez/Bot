@@ -1,5 +1,4 @@
 // APPEL FICHIERS
-const Token = require("./token.json")
 const Mode = require("./modules/mode")
 const Cinema = require("./modules/cinema")
 const Sondage = require("./modules/sondage")
