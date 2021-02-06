@@ -1,4 +1,4 @@
-var ModeList = ["robot","sondage","compétition","cinéma"];
+var ModeList = ["robot","cinéma","sondage","compétition"];
 var Mode = "robot";
 
 module.exports.cmd = function (cmd){
