@@ -18,14 +18,13 @@ client.on("ready", () => { });
 var date = Date.date();
 var H = true;
 var ID;
-var OP = [372062512558113,419925262881260,457240529176887]; 
+var OP = [372062512558113,419925262881260,457240529176887]; //'372062512558112780'
 var mot = "...";
 
 // Horloge interne
 function horloge () {
     console.log('date:', date);
     if (date != Date.date()) {
-        date = Date.date();
         prive('372062512558112780',"Bonjour nous sommes le " + date)
     }
     setTimeout(horloge,90000);
@@ -52,6 +51,10 @@ client.on('message', function (message) {
 
             if (cmd[0] == "!mode") {
                 mot = Mode.cmd(cmd);
+            }
+
+            if (cmd[0] == "!test") {
+                mot = "!stats pc DelKez";
             }
     
             else if (Mode.getMode() == "cinéma") {
