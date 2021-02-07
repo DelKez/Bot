@@ -1,8 +1,7 @@
-var ModeList = ["robot","cinéma","sondage","compétition"];
+var ModeList = ["robot","cinéma","sondage","compétition","stats"];
 var Mode = "robot";
 
 module.exports.cmd = function (cmd){
-    console.log(cmd)
     if (cmd[0] == "!mode"){
         mot = setMode(cmd[1])
     }

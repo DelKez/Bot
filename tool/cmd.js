@@ -22,6 +22,6 @@ function spc(cmd){
         mot = mot + cmd[i] + " ";
         i++;
     }
-    mot = mot + cmd[i]
+    mot = mot + cmd[i];
     return mot
 }

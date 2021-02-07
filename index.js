@@ -1,81 +1,64 @@
 // APPEL FICHIERS
+const Discord = require('discord.js'); 
 const Mode = require("./modules/mode")
 const Cinema = require("./modules/cinema")
 const Sondage = require("./modules/sondage")
 const Stats = require("./modules/stats")
 
-const Date = require("./tool/date")
-const Numero = require("./tool/numero")
 const Cmd = require("./tool/cmd")
+const Date = require("./tool/date")
+const Heure = require("./tool/heure")
+
+const Member = require("./member.json")
 
 // CONNEXION DISCORD
-const Discord = require('discord.js'); 
 const client = new Discord.Client();
 client.login(process.env.TOKEN);
 client.on("ready", () => { });
 
 // VARIABLES
 var date = Date.date();
-var H = true;
+var heure = Heure.heure();
+var evenements = ["fortnite"]
 var ID;
-var OP = [372062512558113,419925262881260,457240529176887]; //'372062512558112780'
+var OP = Member["OP"];
+console.log('OP:', OP)
 var mot = "...";
-
-// Horloge interne
-function horloge () {
-    console.log('date:', date);
-    if (date != Date.date()) {
-        prive('372062512558112780',"Bonjour nous sommes le " + date)
-        date = Date.date();
-    }
-    setTimeout(horloge,90000);
-}
-horloge();
-// Messages privés
-function prive (ID,msg){
-    client.users.fetch(ID).then((user) => {
-        user.send(msg)
-       }) 
-}
 
 // Détéction des messages
 client.on('message', function (message) {  
 
-    ID = message.member;
+    ID = message.member.id;
     cmd = message.content;
     
     if (cmd[0] == "!") {
 
         cmd = Cmd.cmd(cmd)
-        
-        if (OP.indexOf(Math.round(ID / 1000)) >= 0) {
+        console.log('cmd index.js:', cmd)
 
+        console.log('ID:', ID)
+        
+        if (OP.indexOf(ID) >= 0) {
+            
+            message.delete();
             if (cmd[0] == "!mode") {
                 mot = Mode.cmd(cmd);
+                message.channel.send(mot)
             }
-
-            if (cmd[0] == "!test") {
-                mot = "!stats pc DelKez";
-            }
-    
             else if (Mode.getMode() == "cinéma") {
                 mot = Cinema.cmd(cmd);
+                message.channel.send(mot)
             }
-
             else if (Mode.getMode() == "sondage") {
                 mot = Sondage.cmd(cmd);
+                message.channel.send(mot)
             }
-
             else if (Mode.getMode() == "stats") {
-                mot = Stats.cmd(cmd);
+                mot = Stats.cmd(cmd,client);
             }
-
-            else {
+            else  {
                 mot = "...";
             }
-            message.delete();
-            message.channel.send(mot)
-            console.log('mot:', mot)
         }
     }
 })

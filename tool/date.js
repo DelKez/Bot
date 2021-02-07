@@ -1,4 +1,3 @@
-// Date : revoie une chaine de characteres corresspondant à la date
 module.exports.date = function (){
     mois = Date()[4] + Date()[5] + Date()[6];
     if (mois == "Jan") {
@@ -38,7 +37,7 @@ module.exports.date = function (){
         mois = "12";
     }
 
-    mot = Date()[8] + Date()[9] +"/"+ mois +"/"+ Date()[13] + Date()[14];
+    dat = Date()[8] + Date()[9] +"/"+ mois +"/"+ Date()[13] + Date()[14];
     
-    return mot;
+    return dat;
 }
