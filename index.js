@@ -1,5 +1,6 @@
 // APPEL FICHIERS
 const Discord = require('discord.js'); 
+const Token = require('./token')
 const Mode = require("./modules/mode")
 const Cinema = require("./modules/cinema")
 const Sondage = require("./modules/sondage")
@@ -8,6 +9,9 @@ const Stats = require("./modules/stats")
 const Cmd = require("./tool/cmd")
 const Date = require("./tool/date")
 const Heure = require("./tool/heure")
+const Evenement = require("./tool/evenement")
+//const Prive = require("./tool/prive")
+const Numero = require("./tool/numero")
 
 const Member = require("./member.json")
 
@@ -24,6 +28,31 @@ var ID;
 var OP = Member["OP"];
 console.log('OP:', OP)
 var mot = "...";
+
+// Horloge interne
+function horloge () {
+    heure = Heure.heure();
+    if (heure == '08:30') {
+        date = Date.date();
+        prive('372062512558112780',"Bonjour nous sommes le " + date)
+    }
+    if (heure == '15:30') {
+        Evenement.cmd(evenements,client);
+    }
+    setTimeout(horloge,60000);
+}
+//horloge();
+
+//Evenement.cmd(evenements,client);
+
+
+// Messages privés
+function prive(ID,msg){
+    client.users.fetch(ID).then((user) => {
+        user.send(msg)
+       }) 
+}
+
 
 // Détéction des messages
 client.on('message', function (message) {  
