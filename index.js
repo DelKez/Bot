@@ -26,6 +26,7 @@ function horloge () {
     console.log('date:', date);
     if (date != Date.date()) {
         prive('372062512558112780',"Bonjour nous sommes le " + date)
+        date = Date.date();
     }
     setTimeout(horloge,90000);
 }
