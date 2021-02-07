@@ -1,6 +1,6 @@
 // APPEL FICHIERS
 const Discord = require('discord.js'); 
-const Fortnite = require("fortnite"); //383deeb6-62fd-487a-8d92-afdcc9643cc3
+const Fortnite = require("../../node_modules/fortnite"); //383deeb6-62fd-487a-8d92-afdcc9643cc3
 const fortnite = new Fortnite("383deeb6-62fd-487a-8d92-afdcc9643cc3");
 
 module.exports.cmd = function (cmd,client) {
