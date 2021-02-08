@@ -16,7 +16,7 @@ const Member = require("./member.json")
 
 // CONNEXION DISCORD
 const client = new Discord.Client();
-client.login(Token.token);
+client.login(process.env.TOKEN);
 client.on("ready", () => { });
 
 // VARIABLES
