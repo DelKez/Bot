@@ -1,5 +1,6 @@
 // APPEL FICHIERS
 const Discord = require('discord.js'); 
+const Token = require('./token')
 const Mode = require("./modules/mode")
 const Cinema = require("./modules/cinema")
 const Sondage = require("./modules/sondage")
@@ -16,7 +17,7 @@ const Member = require("./member.json")
 
 // CONNEXION DISCORD
 const client = new Discord.Client();
-client.login(process.env.TOKEN);
+client.login(Token.token);
 client.on("ready", () => { });
 
 // VARIABLES
