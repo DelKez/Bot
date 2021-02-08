@@ -5,7 +5,7 @@ const fortnite = new Fortnite("383deeb6-62fd-487a-8d92-afdcc9643cc3");
 
 module.exports.cmd = function (cmd,client) {
 
-    let fortniteChannel = client.channels.cache.get("707069569788936277")
+    let fortniteChannel = client.channels.cache.get("693588402817335306")
 
     username = cmd[0];
     platform = cmd[1] || "pc";
