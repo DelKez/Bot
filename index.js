@@ -12,7 +12,7 @@ const Heure = require("./tool/heure")
 const Evenement = require("./tool/evenement")
 const Numero = require("./tool/numero")
 
-const Membre = require("./membre.json")
+const Membre = require("./membre")
 
 // CONNEXION DISCORD
 const client = new Discord.Client();
