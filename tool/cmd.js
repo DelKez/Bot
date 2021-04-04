@@ -25,3 +25,15 @@ function spc(cmd){
     mot = mot + cmd[i];
     return mot
 }
+
+module.exports.sspc = function (cmd){
+
+    mot = cmd[0]
+
+    i = 1;
+    while (i < cmd.length){
+        mot = mot + "," + cmd[i]
+        i++;
+    }
+    return mot
+}

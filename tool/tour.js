@@ -1,30 +1,37 @@
-module.exports.num = function (num){
+module.exports.tlt = function (num){
 
-    if (num < 0){return neg}
-    else if (num <= 32) {return tour(num)}
-    else {return outOfRange}
-}
-
-function tour(num) {
-    if (num == 0) {
-        return "de la FINALE"
-    }
-    if (num == 1) {
-        return "de la Petite finale (3ème place)"
-    }
     if (num == 2) {
+        return ["de la FINALE","de la Petite finale (3ème place)"]
+    }
+    else if (num == 4) {
         return "des Demis-finale"
     }
-    if (num == 4) {
+    else if (num == 8) {
         return "des Quarts de finale"
     }
-    if (num == 8) {
+    else if (num == 16) {
         return "des 1/8ème de finale"
     }
-    if (num == 16) {
-        return "des 1/16ème de finale"
+    else {
+        return "de la phase de groupe"
     }
-    if (num == 32) {
-        return "des 1/32ème de finale"
+}
+
+module.exports.num = function (num){
+
+    if (num == 2) {
+        return ["FINALE","Petite finale"]
+    }
+    else if (num == 4) {
+        return "Demis-finale n°"
+    }
+    else if (num == 8) {
+        return "Quarts de finale n°"
+    }
+    else if (num == 16) {
+        return "1/8ème de finale n°"
+    }
+    else {
+        return "Groupe n°"
     }
 }
