@@ -1,6 +1,5 @@
 // APPEL FICHIERS
 const Discord = require('discord.js'); 
-const Token = require('./token')
 const Mode = require("./modules/mode")
 const Robot = require("./modules/robot")
 const Cinema = require("./modules/cinema")
