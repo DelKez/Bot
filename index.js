@@ -1,6 +1,8 @@
 // APPEL FICHIERS
 const Discord = require('discord.js'); 
+const Token = require('./token')
 const Mode = require("./modules/mode")
+const Robot = require("./modules/robot")
 const Cinema = require("./modules/cinema")
 const Sondage = require("./modules/sondage")
 const Stats = require("./modules/stats")
@@ -9,23 +11,20 @@ const Cmd = require("./tool/cmd")
 const Date = require("./tool/date")
 const Heure = require("./tool/heure")
 const Evenement = require("./tool/evenement")
-//const Prive = require("./tool/prive")
 const Numero = require("./tool/numero")
 
-const Member = require("./member.json")
+const Membre = require("./membre.json")
 
 // CONNEXION DISCORD
 const client = new Discord.Client();
-client.login(process.env.TOKEN);
+client.login(Token.token);
 client.on("ready", () => { });
 
 // VARIABLES
 var date = Date.date();
 var heure = Heure.heure();
-var evenements = ["fortnite"]
 var ID;
-var OP = Member["OP"];
-console.log('OP:', OP)
+var OP = Membre["OP"];
 var mot = "...";
 
 // Horloge interne
@@ -42,50 +41,47 @@ function horloge () {
 }
 //horloge();
 
-//Evenement.cmd(evenements,client);
 
-
-// Messages privés
+// Messages privés temp
 function prive(ID,msg){
-    client.users.fetch(ID).then((user) => {
-        user.send(msg)
-       }) 
+        client.users.fetch(ID).then((user) => {
+            user.send(msg)
+        }) 
 }
 
-
 // Détéction des messages
-client.on('message', function (message) {  
-
+client.on('message', function (message) { 
+    
     ID = message.member.id;
-    cmd = message.content;
+    cmd = message.content
     
     if (cmd[0] == "!") {
 
         cmd = Cmd.cmd(cmd)
         console.log('cmd index.js:', cmd)
-
         console.log('ID:', ID)
         
         if (OP.indexOf(ID) >= 0) {
-            
             message.delete();
             if (cmd[0] == "!mode") {
                 mot = Mode.cmd(cmd);
                 message.channel.send(mot)
+            }
+            else if (cmd[0] == "!mode?"){
+                message.channel.send("Je suis en mode " + Mode.getMode() + " !")
+            }
+            else if (Mode.getMode() == "robot") {
+                mot = Robot.cmd(cmd,message);
             }
             else if (Mode.getMode() == "cinéma") {
                 mot = Cinema.cmd(cmd);
                 message.channel.send(mot)
             }
             else if (Mode.getMode() == "sondage") {
-                mot = Sondage.cmd(cmd);
-                message.channel.send(mot)
+                Sondage.cmd(cmd,message);
             }
             else if (Mode.getMode() == "stats") {
-                mot = Stats.cmd(cmd,client);
-            }
-            else  {
-                mot = "...";
+                Stats.cmd(cmd,client,message,ID);
             }
         }
     }
