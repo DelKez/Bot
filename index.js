@@ -11,7 +11,6 @@ const Date = require("./tool/date")
 const Heure = require("./tool/heure")
 const Evenement = require("./tool/evenement")
 const Numero = require("./tool/numero")
-
 const Membre = require("./membre")
 
 // CONNEXION DISCORD
