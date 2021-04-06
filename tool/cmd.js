@@ -26,14 +26,32 @@ function spc(cmd){
     return mot
 }
 
-module.exports.sspc = function (cmd){
+module.exports.scmd = function (cmd){
 
-    mot = cmd[0]
+    if (cmd[0].indexOf(" ") >= 0){
+        cmd[0] = sspc(cmd[0]);
+    }
 
     i = 1;
     while (i < cmd.length){
-        mot = mot + "," + cmd[i]
+        if (cmd[i].indexOf(" ") >= 0){
+            cmd[i] = sspc(cmd[i]);
+        }
+        i = i+1
+    }
+    return cmd
+}
+
+function sspc(cmd){
+    
+    cmd = cmd.split(" ");
+
+    mot = "";
+    i = 0;
+    while (i < cmd.length-1){
+        mot = mot + cmd[i] + "_";
         i++;
     }
+    mot = mot + cmd[i];
     return mot
 }
