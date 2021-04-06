@@ -14,8 +14,8 @@ module.exports.cmd = function (cmd,message){
         help(message)
     }
     else if (cmd[0] == "!liste"){
-        liste(cmd[1],message)
-        msg = "!tirage"+" "+cmd[1]
+        l = liste(cmd[1],message)
+        msg = "!tirage"+" "+l
     }
     else if (cmd[0] == "!tirage"){
         l = tirage(cmd[1],message)
@@ -31,7 +31,11 @@ module.exports.cmd = function (cmd,message){
         final(cmd[1],message)
     }
     if (msg != ""){
-        message.channel.send(msg)
+        emb = new Discord.MessageEmbed()
+        .setColor('#44e3e8')
+        .setTitle("Prochaine commande :")
+        .setDescription("`"+msg+"`")
+        message.channel.send(emb)
     }
 }
 
@@ -78,6 +82,9 @@ function liste(cmd,message){
         .setDescription("**"+mot+"**")
         message.channel.send(emb)
     }
+
+    L = Cmd.scmd(L)
+    return L
 }
 
 function tirage(cmd,message){
@@ -117,6 +124,9 @@ function tirage(cmd,message){
         }
         message.channel.send(emb)
     }
+
+    console.log('L:', L)
+    L = Cmd.scmd(L)
     return L
 }
 
