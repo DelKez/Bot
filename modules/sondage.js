@@ -8,7 +8,7 @@ const Cmd = require("../tool/cmd");
 const Aleatoire = require("../tool/aleatoire");
 
 module.exports.cmd = function (cmd,message){
-
+    
     msg = ""
     if (cmd[0] == "!help"){
         help(message)
