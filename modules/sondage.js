@@ -8,7 +8,7 @@ const Cmd = require("../tool/cmd");
 const Aleatoire = require("../tool/aleatoire");
 
 module.exports.cmd = function (cmd,message){
-    
+
     msg = ""
     if (cmd[0] == "!help"){
         help(message)
@@ -27,8 +27,8 @@ module.exports.cmd = function (cmd,message){
     else if (cmd[0] == "!prolong"){
         prolong(cmd,message)
     }
-    else if (cmd[0] == "!final"){
-        final(cmd[1],message)
+    else if (cmd[0] == "!podium"){
+        podium(cmd,message)
     }
     if (msg != ""){
         emb = new Discord.MessageEmbed()
@@ -48,6 +48,7 @@ function help(message){
             { name: '!liste   (Liste)',          value: "Liste : Chaque participant est séparés par une virgule", inline: false },
             { name: '!tirage  (Liste)',          value: "Liste : Chaque participant est séparés par une virgule", inline: false },
             { name: '!prolong (Liste) (Match)',  value: "Liste : Chaque participant est séparés par une virgule \n Match : Duel_n°x, Groupe_n°x", inline: false },
+            { name: '!podium  (Liste) (Nom)',    value: "Liste : Chaque participant est séparés par une virgule \n Nom   : Nom du sondage", inline: false }
         );
     message.channel.send(emb)
 }
@@ -216,5 +217,24 @@ function prolong(cmd,message){
             sentEmbed.react(Numero.cap(i))
             i = i+1;
         }
+    })
+}
+
+function podium(cmd,message){
+
+    L = cmd[1].split(",");
+
+    couleur = '#44e3e8' 
+
+    mot = Numero.med(3) +" "+ L[2] +"\n"+ Numero.med(2) +" "+ L[1] +"\n"+ Numero.med(1) +" "+ L[0] +"\n"
+
+    emb = new Discord.MessageEmbed()
+    .setColor(couleur)
+    .setTitle('Voici le podium du sondage "'+ cmd[2] +'"')
+    .setDescription("**"+ mot +"**")
+    message.channel.send(emb).then(sentEmbed => {
+        sentEmbed.react("👍")
+        sentEmbed.react("👎")
+        sentEmbed.react("👏")
     })
 }
