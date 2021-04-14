@@ -13,6 +13,8 @@ const Evenement = require("./tool/evenement")
 const Numero = require("./tool/numero")
 const Membre = require("./membre")
 
+evenements = "fortnite"
+
 // CONNEXION DISCORD
 const client = new Discord.Client();
 client.login(process.env.TOKEN)
@@ -33,11 +35,11 @@ function horloge () {
         prive('372062512558112780',"Bonjour nous sommes le " + date)
     }
     if (heure == '15:30') {
-        Evenement.cmd(evenements,client);
+        Evenement.cmd(evenements,client)
     }
-    setTimeout(horloge,60000);
+    setTimeout(horloge,60000)
 }
-//horloge();
+horloge()
 
 
 // Messages privés temp
@@ -84,5 +86,3 @@ client.on('message', function (message) {
         }
     }
 })
-
-//HEROKU MDP : As usual
