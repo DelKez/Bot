@@ -27,11 +27,11 @@ var mot = "...";
 
 // Détéction des messages
 client.on('message', function (message) { 
-    
-    ID = message.member.id;
     cmd = message.content
     
     if (cmd[0] == "!") {
+        
+        ID = message.member.id
 
         cmd = Cmd.cmd(cmd)
         console.log('cmd index.js:', cmd)
@@ -75,7 +75,7 @@ function horloge () {
     heure = Heure.heure()
     if (heure == '08:30') {
         date = Date.date();
-        prive('372062512558112780',"Bonjour, on est"+ date[0] +" et nous sommes le " + date[1])
+        prive('372062512558112780',"Bonjour, on est "+ date[0] +" et nous sommes le " + date[1])
     }
     if (heure == '15:30') {
         Evenement.cmd('fortnite',client)
