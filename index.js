@@ -13,8 +13,6 @@ const Evenement = require("./tool/evenement")
 const Numero = require("./tool/numero")
 const Membre = require("./membre")
 
-evenements = "fortnite"
-
 // CONNEXION DISCORD
 const client = new Discord.Client();
 client.login(process.env.TOKEN)
@@ -26,28 +24,6 @@ var heure = Heure.heure();
 var ID;
 var OP = Membre["OP"];
 var mot = "...";
-
-// Horloge interne
-function horloge () {
-    heure = Heure.heure();
-    if (heure == '08:30') {
-        date = Date.date();
-        prive('372062512558112780',"Bonjour nous sommes le " + date)
-    }
-    if (heure == '15:30') {
-        Evenement.cmd(evenements,client)
-    }
-    setTimeout(horloge,60000)
-}
-horloge()
-
-
-// Messages privés temp
-function prive(ID,msg){
-        client.users.fetch(ID).then((user) => {
-            user.send(msg)
-        }) 
-}
 
 // Détéction des messages
 client.on('message', function (message) { 
@@ -86,3 +62,24 @@ client.on('message', function (message) {
         }
     }
 })
+
+// Messages privés temp
+function prive(ID,msg){
+        client.users.fetch(ID).then((user) => {
+            user.send(msg)
+        }) 
+}
+
+// Horloge interne
+function horloge () {
+    heure = Heure.heure()
+    if (heure == '08:30') {
+        date = Date.date();
+        prive('372062512558112780',"Bonjour, on est"+ date[0] +" et nous sommes le " + date[1])
+    }
+    if (heure == '15:30') {
+        Evenement.cmd('fortnite',client)
+    }
+    setTimeout(horloge,60000)
+}
+horloge()
