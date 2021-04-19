@@ -45,10 +45,10 @@ function help(message){
         .setColor('#44e3e8')
         .setAuthor("Cmd Sondage :","https://icon-library.com/images/white-gear-icon-png/white-gear-icon-png-12.jpg")
         .addFields(
-            { name: '!liste   (Liste)',          value: "Liste : Chaque participant est séparés par une virgule", inline: false },
-            { name: '!tirage  (Liste)',          value: "Liste : Chaque participant est séparés par une virgule", inline: false },
+            { name: '!liste (Liste)',            value: "Liste : Chaque participant est séparés par une virgule", inline: false },
+            { name: '!tirage (Liste)',           value: "Liste : Chaque participant est séparés par une virgule", inline: false },
             { name: '!prolong (Liste) (Match)',  value: "Liste : Chaque participant est séparés par une virgule \n Match : Duel_n°x, Groupe_n°x", inline: false },
-            { name: '!podium  (Liste) (Nom)',    value: "Liste : Chaque participant est séparés par une virgule \n Nom   : Nom du sondage", inline: false }
+            { name: '!podium (Liste) (Nom)',     value: "Liste : Chaque participant est séparés par une virgule \n Nom   : Nom du sondage", inline: false }
         );
     message.channel.send(emb)
 }
