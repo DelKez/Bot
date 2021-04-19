@@ -1,43 +1,70 @@
 module.exports.date = function (){
-    mois = Date()[4] + Date()[5] + Date()[6];
+    date = Date().split(" ");
+    jour1 = date[2];
+    annee = date[3][2]+date[3][3];
+
+    mois = date[1];
     if (mois == "Jan") {
         mois = "01";
     }
-    if (mois == "Feb") {
+    else if (mois == "Feb") {
         mois = "02";
     }
-    if (mois == "Mar") {
+    else if (mois == "Mar") {
         mois = "03";
     }
-    if (mois == "Apr") {
+    else if (mois == "Apr") {
         mois = "04";
     }
-    if (mois == "May") {
+    else if (mois == "May") {
         mois = "05";
     }
-    if (mois == "Jun") {
+    else if (mois == "Jun") {
         mois = "06";
     }
-    if (mois == "Jul") {
+    else if (mois == "Jul") {
         mois = "07";
     }
-    if (mois == "Aug") {
+    else if (mois == "Aug") {
         mois = "08";
     }
-    if (mois == "Sep") {
+    else if (mois == "Sep") {
         mois = "09";
     }
-    if (mois == "Oct") {
+    else if (mois == "Oct") {
         mois = "10";
     }
-    if (mois == "Nov") {
+    else if (mois == "Nov") {
         mois = "11";
     }
-    if (mois == "Dec") {
+    else if (mois == "Dec") {
         mois = "12";
     }
 
-    dat = Date()[8] + Date()[9] +"/"+ mois +"/"+ Date()[13] + Date()[14];
+    jour2 = date[0];
+    if (jour2 == "Mon") {
+        jour2 = "Lundi";
+    }
+    else if (jour2 == "Tue") {
+        jour2 = "Mardi";
+    }
+    else if (jour2 == "Wed") {
+        jour2 = "Mercredi";
+    }
+    else if (jour2 == "Thu") {
+        jour2 = "Jedi";
+    }
+    else if (jour2 == "Fri") {
+        jour2 = "Vendredi";
+    }
+    else if (jour2 == "Sat") {
+        jour2 = "Samedi";
+    }
+    else if (jour2 == "Sun") {
+        jour2 = "Dimanche";
+    } 
+
+    dat = [jour2,jour1+"/"+mois+"/"+annee]
     
     return dat;
 }
