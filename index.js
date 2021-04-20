@@ -76,11 +76,10 @@ function horloge () {
         Prive.msg(client,'372062512558112780',msg)
     }
     if (heure.startsWith('15:3')) {
-        jour = Horloge.jour();
         if (jour == "Lundi") {
             Evenement.cmd('fortnite',client)
         }
     }
-    setTimeout(horloge,300000) //5min
+    setTimeout(horloge,600000) //10min
 }
 setTimeout(horloge,5000) //5sec
