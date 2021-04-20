@@ -20,6 +20,7 @@ function horloge() {
 
     jour = DATE.getUTCDate() ;
     mois = DATE.getUTCMonth()+1;
+    if (mois < 10){mois = "0"+mois}
     annee = DATE.getUTCFullYear();
 
     date = jour+"/"+mois+"/"+annee;
