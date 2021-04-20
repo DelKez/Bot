@@ -18,10 +18,11 @@ function horloge() {
 
     DATE = new Date();
 
-    jour = DATE.getUTCDate() ;
+    jour = DATE.getUTCDate();
     mois = DATE.getUTCMonth()+1;
+    annee = DATE.getUTCFullYear()-2000;
     if (mois < 10){mois = "0"+mois}
-    annee = DATE.getUTCFullYear();
+    if (jour < 10){jour = "0"+jour}
 
     date = jour+"/"+mois+"/"+annee;
 
@@ -47,8 +48,15 @@ function horloge() {
     else if (jour == 0) {
         jour = "Dimanche";
     } 
+    
+    heure = DATE.getUTCHours()+2
+    minute = DATE.getUTCMinutes()
+    seconde = DATE.getUTCSeconds()
+    if (heure < 10){heure = "0"+heure}
+    if (minute < 10){minute = "0"+minute}
+    if (seconde < 10){seconde = "0"+seconde}
 
-    heure = DATE.getUTCHours()+2 +":"+ DATE.getUTCMinutes() +":"+ DATE.getUTCSeconds()
+    heure = heure+":"+minute+":"+seconde
 
     return [date,jour,heure]
 }
