@@ -1,31 +1,26 @@
 // APPEL FICHIERS
-const Date = require("../tool/date")
+const Discord = require('discord.js'); 
 
-module.exports.cmd = function (cmd){
+module.exports.cmd = function (cmd,message){
     if (cmd[0] == "!help"){
-        mot = help()
+        help()
     }
     else if (cmd[0] == "!seance"){
-        mot = start(cmd)
+        start(cmd)
     }
-    else {
-        mot = "..."
-    }
-    return mot
 }
 
-function help(){    
-    mot = "!seance Titre S Ep Ep Date Heure Nom —>" + "\n" + "||@everyone|| **SÉANCE :** " + "**" + "Titre" + "** - SAISON " + "S" + " ÉPISODE " + "Ep" + " À " + "Ep" + " PROGRAMMER AU " + "Date" + " - " + "Heure" + " — HÔTE : " + "Nom"
-    return mot
+function help(message){    
+
+    emb = new Discord.MessageEmbed()
+        .setColor('#44e3e8')
+        .setAuthor("Cmd Sondage :","https://icon-library.com/images/white-gear-icon-png/white-gear-icon-png-12.jpg")
+        .addFields(
+            { name: '!rien',           value: "ça fait rien", inline: false },
+        );
+    message.channel.send(emb)
 }
 
 function start(cmd){
 
-    if (cmd[5] == "ajd"){
-        cmd[5] = Date.date()
-    }
-
-    mot = "**SÉANCE :** " + "**" + cmd[1] + "** - SAISON " + cmd[2] + " ÉPISODE " + cmd[3] + " À " + cmd[4] + " PROGRAMMER AU " + cmd[5] + " - " + cmd[6] + " — HÔTE : "
-    mot = "||@everyone|| " + mot.toUpperCase() + cmd[7]
-    return mot
 }

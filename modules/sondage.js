@@ -1,6 +1,5 @@
 // APPEL FICHIERS
 const Discord = require('discord.js'); 
-const Date = require("../tool/date");
 const Tour = require("../tool/tour");
 const Couleur = require("../tool/couleur");
 const Numero = require("../tool/numero");

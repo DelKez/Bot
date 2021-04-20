@@ -7,10 +7,10 @@ const Sondage = require("./modules/sondage")
 const Stats = require("./modules/stats")
 
 const Cmd = require("./tool/cmd")
-const Date = require("./tool/date")
-const Heure = require("./tool/heure")
+const Horloge = require("./tool/horloge")
 const Evenement = require("./tool/evenement")
 const Numero = require("./tool/numero")
+
 const Membre = require("./membre")
 
 // CONNEXION DISCORD
@@ -19,8 +19,6 @@ client.login(process.env.TOKEN)
 client.on("ready", () => { });
 
 // VARIABLES
-var date = Date.date();
-var heure = Heure.heure();
 var ID;
 var OP = Membre["OP"];
 var mot = "...";
@@ -32,10 +30,10 @@ client.on('message', function (message) {
     if (cmd[0] == "!") {
         
         ID = message.member.id
+        user = message.author.username
 
         cmd = Cmd.cmd(cmd)
-        console.log('cmd index.js:', cmd)
-        console.log('ID:', ID)
+        console.log(user,': ', cmd)
         
         if (OP.indexOf(ID) >= 0) {
             message.delete();
@@ -46,6 +44,10 @@ client.on('message', function (message) {
             else if (cmd[0] == "!mode?"){
                 message.channel.send("Je suis en mode " + Mode.getMode() + " !")
             }
+            else if (cmd[0] == "!test"){
+                message.channel.send("Nous sommes " + Horloge.jour() +", le "+ Horloge.date() +" et il est "+ Horloge.heure())
+            }
+
             else if (Mode.getMode() == "robot") {
                 mot = Robot.cmd(cmd,message);
             }
@@ -72,14 +74,20 @@ function prive(ID,msg){
 
 // Horloge interne
 function horloge () {
-    heure = Heure.heure()
-    if (heure == '08:30') {
-        date = Date.date();
-        prive('372062512558112780',"Bonjour, on est "+ date[0] +" et nous sommes le " + date[1])
+    date = Horloge.date();
+    jour = Horloge.jour();
+    heure = Horloge.heure();
+
+    if (heure.startsWith('07:2')) {
+        msg = "Nous sommes " + jour +", le "+ date +" et il est "+ heure
+        prive('372062512558112780',msg)
     }
-    if (heure == '15:30') {
-        Evenement.cmd('fortnite',client)
+    if (heure.startsWith('15:3')) {
+        jour = Horloge.jour();
+        if (jour == "Lundi") {
+            Evenement.cmd('fortnite',client)
+        }
     }
-    setTimeout(horloge,60000)
+    setTimeout(horloge,300000) //5min
 }
-horloge()
+setTimeout(horloge,5000) //5sec
