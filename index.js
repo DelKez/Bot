@@ -8,8 +8,8 @@ const Stats = require("./modules/stats")
 
 const Cmd = require("./tool/cmd")
 const Horloge = require("./tool/horloge")
+const Prive = require("./tool/prive")
 const Evenement = require("./tool/evenement")
-const Numero = require("./tool/numero")
 
 const Membre = require("./membre")
 
@@ -65,22 +65,15 @@ client.on('message', function (message) {
     }
 })
 
-// Messages privés temp
-function prive(ID,msg){
-        client.users.fetch(ID).then((user) => {
-            user.send(msg)
-        }) 
-}
-
 // Horloge interne
 function horloge () {
     date = Horloge.date();
     jour = Horloge.jour();
     heure = Horloge.heure();
 
-    if (heure.startsWith('07:2')) {
+    if (heure.startsWith('07:3')) {
         msg = "Nous sommes " + jour +", le "+ date +" et il est "+ heure
-        prive('372062512558112780',msg)
+        Prive.msg(client,'372062512558112780',msg)
     }
     if (heure.startsWith('15:3')) {
         jour = Horloge.jour();
