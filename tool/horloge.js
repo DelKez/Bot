@@ -16,73 +16,38 @@ module.exports.heure = function (){
 
 function horloge() {
 
-    DATE = Date().split(" ");
+    DATE = new Date();
 
-    jour = DATE[2];
-    annee = DATE[3][2]+DATE[3][3];
-    mois = DATE[1];
-    if (mois == "Jan") {
-        mois = "01";
-    }
-    else if (mois == "Feb") {
-        mois = "02";
-    }
-    else if (mois == "Mar") {
-        mois = "03";
-    }
-    else if (mois == "Apr") {
-        mois = "04";
-    }
-    else if (mois == "May") {
-        mois = "05";
-    }
-    else if (mois == "Jun") {
-        mois = "06";
-    }
-    else if (mois == "Jul") {
-        mois = "07";
-    }
-    else if (mois == "Aug") {
-        mois = "08";
-    }
-    else if (mois == "Sep") {
-        mois = "09";
-    }
-    else if (mois == "Oct") {
-        mois = "10";
-    }
-    else if (mois == "Nov") {
-        mois = "11";
-    }
-    else if (mois == "Dec") {
-        mois = "12";
-    }
+    jour = DATE.getUTCDate() ;
+    mois = DATE.getUTCMonth()+1;
+    annee = DATE.getUTCFullYear();
+
     date = jour+"/"+mois+"/"+annee;
 
-    jour = DATE[0];
-    if (jour == "Mon") {
+    jour = DATE.getUTCDay()
+    if (jour == 1) {
         jour = "Lundi";
     }
-    else if (jour == "Tue") {
+    else if (jour == 2) {
         jour = "Mardi";
     }
-    else if (jour == "Wed") {
+    else if (jour == 3) {
         jour = "Mercredi";
     }
-    else if (jour == "Thu") {
+    else if (jour == 4) {
         jour = "Jedi";
     }
-    else if (jour == "Fri") {
+    else if (jour == 5) {
         jour = "Vendredi";
     }
-    else if (jour == "Sat") {
+    else if (jour == 6) {
         jour = "Samedi";
     }
-    else if (jour == "Sun") {
+    else if (jour == 0) {
         jour = "Dimanche";
     } 
 
-    heure = DATE[4]
+    heure = DATE.getUTCHours()+2 +":"+ DATE.getUTCMinutes() +":"+ DATE.getUTCSeconds()
 
     return [date,jour,heure]
 }
