@@ -28,7 +28,7 @@ client.on('message', function (message) {
     cmd = message.content
     
     if (message.member.id == "422388406346055681") {
-        message.reply("Tais toi");
+        message.channel.send("Tais toi");
         message.delete();
     }
     
