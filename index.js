@@ -28,7 +28,7 @@ client.on('message', function (message) {
     cmd = message.content
     
     if (message.member.id == "422388406346055681") {
-        message.channel.send("Tais toi ptite chienne");
+        message.channel.send("Plus qu'un message avant le ban définitif");
         message.delete();
     }
     
