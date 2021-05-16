@@ -27,11 +27,6 @@ var mot = "...";
 client.on('message', function (message) { 
     cmd = message.content
     
-    if (message.member.id == "422388406346055681") {
-        message.channel.send("Plus qu'un message avant le ban définitif");
-        message.delete();
-    }
-    
     if (cmd[0] == "!") {
         
         ID = message.member.id
