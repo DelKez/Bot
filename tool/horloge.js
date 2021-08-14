@@ -37,7 +37,7 @@ function horloge() {
         jour = "Mercredi";
     }
     else if (jour == 4) {
-        jour = "Jedi";
+        jour = "Jeudi";
     }
     else if (jour == 5) {
         jour = "Vendredi";
